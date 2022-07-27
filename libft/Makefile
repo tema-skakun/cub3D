@@ -6,7 +6,7 @@
 #    By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/11 18:42:30 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/07/25 21:08:17 by fdarkhaw         ###   ########.fr        #
+#    Updated: 2022/07/27 20:39:07 by fdarkhaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,8 @@ OBJ			= ${patsubst %.c,%.o,$(LIST)}
 
 OBJ_B		= ${patsubst %.c,%.o,$(LIST_B)}
 
-CC			= gcc
-FLAGS		= -Wall -Wextra -Werror -I $(HEADER)
+CC			= cc
+FLAGS		= -Wall -Wextra -Werror -O2 -I $(HEADER)
 
 .PHONY		: all clean fclean re bonus
 

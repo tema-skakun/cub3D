@@ -6,15 +6,16 @@
 #    By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/07/25 21:37:58 by fdarkhaw         ###   ########.fr        #
+#    Updated: 2022/07/27 22:20:15 by fdarkhaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= cub3D
-SRCS_DIR	= src/
-OBJS_DIR	= obj/
-INCS_DIR	= include
-SRCS_F		= main.c	parser.c	error.c
+NAME		= 	cub3D
+SRCS_DIR	= 	src/
+OBJS_DIR	= 	obj/
+INCS_DIR	= 	include
+SRCS_F		= 	main.c	parser.c	error.c	get_next_line.c \
+				get_next_line_utils.c
 
 SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_F))
 OBJS_F		= $(patsubst %.c, %.o, $(SRCS_F))
