@@ -6,7 +6,7 @@
 #    By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/11 18:42:30 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/07/27 20:39:07 by fdarkhaw         ###   ########.fr        #
+#    Updated: 2022/07/29 20:10:59 by fdarkhaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIST		=		ft_isalpha.c	ft_isdigit.c	ft_isalnum.c\
 					ft_strjoin.c	ft_strtrim.c	ft_split.c\
 					ft_itoa.c		ft_strmapi.c	ft_striteri.c\
 					ft_putchar_fd.c	ft_putstr_fd.c	ft_putendl_fd.c\
-					ft_putnbr_fd.c\
+					ft_putnbr_fd.c	ft_strcmp.c\
 					ft_lstnew.c		ft_lstadd_front.c	ft_lstsize.c\
 					ft_lstlast.c	ft_lstadd_back.c	ft_lstdelone.c\
 					ft_lstclear.c	ft_lstiter.c		ft_lstmap.c

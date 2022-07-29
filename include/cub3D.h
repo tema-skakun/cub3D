@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/07/27 22:11:49 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/07/29 21:02:31 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,26 @@ typedef struct s_vars
 	void	*win;
 }				t_vars;
 
-typedef struct s_size
+typedef struct s_game
 {
-	int	x;
-	int	y;
-}				t_size;
+	char	*NO;
+	char	*SO;
+	char	*WE;
+	char	*EA;
+	char	*F;
+	char	*C;
+	int		x;
+	int		y;
+	char	hero;
+}				t_game;
 
-int		parser(int argc, char *av);
+
+
+int		parser(int argc, char *av, t_game *game);
 int 	ft_error(char *str);
+void	cleane(t_game *game);
 char    *get_next_line(int fd);
+char	*ft_strcpy(char *dest, char *src);
+char	*ft_strjoin_gnl(char *s1, char const *s2);
 
 #endif
