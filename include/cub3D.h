@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/07/29 21:02:31 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/07/30 19:23:45 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ typedef struct s_vars
 
 typedef struct s_game
 {
-	char	*NO;
-	char	*SO;
-	char	*WE;
-	char	*EA;
-	char	*F;
-	char	*C;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	int		f[3];
+	int		c[3];
 	int		x;
 	int		y;
 	char	hero;
@@ -47,9 +47,10 @@ typedef struct s_game
 
 
 int		parser(int argc, char *av, t_game *game);
-int 	ft_error(char *str);
-void	cleane(t_game *game);
-char    *get_next_line(int fd);
+int		ft_error(char *str);
+void	cleaner(t_game *game);
+void	free_point_str(char **p_str);
+char	*get_next_line(int fd);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strjoin_gnl(char *s1, char const *s2);
 

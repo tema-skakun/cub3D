@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+         #
+#    By: jg <jg@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/11 18:42:30 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/07/29 20:10:59 by fdarkhaw         ###   ########.fr        #
+#    Updated: 2022/07/30 18:17:09 by jg               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,23 +28,23 @@ LIST		=		ft_isalpha.c	ft_isdigit.c	ft_isalnum.c\
 					ft_lstlast.c	ft_lstadd_back.c	ft_lstdelone.c\
 					ft_lstclear.c	ft_lstiter.c		ft_lstmap.c
 
-HEADER		= libft.h
+HeaDER		= libft.h
 
 OBJ			= ${patsubst %.c,%.o,$(LIST)}
 
 OBJ_B		= ${patsubst %.c,%.o,$(LIST_B)}
 
 CC			= cc
-FLAGS		= -Wall -Wextra -Werror -O2 -I $(HEADER)
+FLAGS		= -Wall -Wextra -Werror -O2 -I $(HeaDER)
 
 .PHONY		: all clean fclean re bonus
 
 all			: $(NAME)
 
-$(NAME)		: $(OBJ) $(HEADER)
+$(NAME)		: $(OBJ) $(HeaDER)
 				ar rcs $(NAME) $?
 
-%.o : %.c $(HEADER)
+%.o : %.c $(HeaDER)
 	$(CC) $(FLAGS) -c $< -o $@
 
 bonus	:

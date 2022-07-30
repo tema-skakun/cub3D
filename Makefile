@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+         #
+#    By: jg <jg@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/07/29 21:09:39 by fdarkhaw         ###   ########.fr        #
+#    Updated: 2022/07/30 17:52:08 by jg               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRCS_DIR	= 	src/
 OBJS_DIR	= 	obj/
 INCS_DIR	= 	include
 SRCS_F		= 	main.c	parser.c		error.c		get_next_line.c \
-				get_next_line_utils.c	cleane.c
+				get_next_line_utils.c	cleaner.c
 
 SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_F))
 OBJS_F		= $(patsubst %.c, %.o, $(SRCS_F))

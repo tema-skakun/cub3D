@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:42:07 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/07/29 21:01:25 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/07/30 17:51:19 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	
 	game = (t_game){};
 	parser(argc, argv[1], &game);
-	cleane(&game);
+	cleaner(&game);
 	return (0);
 }
