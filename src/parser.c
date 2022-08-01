@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/07/30 23:01:07 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/01 22:26:03 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,77 @@
 // 	return (rd);
 // }
 
-void	get_size_map(int fd, t_game *game)//карта не может быть разорвана переносами каретки, добавить эту проверку
+void	print_game(t_game *game)//del
 {
-	char	*base;
-	char	*line;
-	int		y;
-	int		x;
-
-	base = "NSWEFC";
-	x = 0;
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (NULL == line)
-			break ;
-		if (!ft_strchr(base, line[0]))
-		{
-			y = ft_strlen(line);
-			if (game->y < y)
-				game->y = y;
-			x++;
-		}
-		free(line);
-	}
-	game->x = x;
+	printf("no -%s\n", game->no);
+	printf("so -%s\n", game->so);
+	printf("we -%s\n", game->we);
+	printf("ea -%s\n", game->ea);
+	printf("f - r=%d,\tg=%d,\tb=%d\n", game->f[0], game->f[1], game->f[2]);
+	printf("c - r=%d,\tg=%d,\tb=%d\n", game->c[0], game->c[1], game->c[2]);
 	printf("x - %d\n", game->x);
 	printf("y - %d\n", game->y);
+}
+
+void	get_map(int fd, t_game *game)//x = кол-во строк; y = кол-во столбцов
+{
+	char	*base;
+	char	*line[2];
+
+	(void)game;
+	base = "NSWEFC\n";
+	while (1)
+	{
+		line[0] = get_next_line(fd);
+		if (NULL == line[0])
+			break ;
+		if (!ft_strchr(base, line[0][0]))
+		{
+			printf("map =\t%s", line[0]);//придумать как сохранить содержимое
+			while (1)
+			{
+				line[1] = get_next_line(fd);
+				if (NULL == line[1])
+					break ;
+				printf("map =\t%s", line[1]);//придумать как сохранить содержимое
+				free(line[1]);
+			}
+		}
+		free(line[0]);
+	}
+}
+
+void	get_size_map(int fd, t_game *game)//карта не может быть разорвана переносами каретки
+{
+	char	*base;
+	char	*line[2];
+	int		y;
+
+	base = "NSWEFC\n";
+	while (1)
+	{
+		line[0] = get_next_line(fd);
+		if (NULL == line[0])
+			break ;
+		if (!ft_strchr(base, line[0][0]))
+		{
+			game->x++;
+			while (1)
+			{
+				line[1] = get_next_line(fd);
+				if (NULL == line[1])
+					break ;
+				if (ft_strchr("\n", line[1][0]))// && ft_strchr(line[1], "01"))
+					ft_error("Error: the map contains an invalid character(s)");
+				y = ft_strlen(line[1]);
+				if (game->y < y)
+					game->y = y;
+				game->x++;
+				free(line[1]);
+			}
+		}
+		free(line[0]);
+	}
 }
 
 void	convert_digit(int *rgb, char **digit)
@@ -132,13 +177,13 @@ void	check_config_file(int fd, t_game *game)
 		if (NULL == line)
 			break ;
 		if (!ft_strncmp(line, "NO", 2))
-			add_path_texture(&game->no, line, "NO ", &key);
+			add_path_texture(&game->no, line, "NO \n", &key);
 		if (!ft_strncmp(line, "SO", 2))
-			add_path_texture(&game->so, line, "SO ", &key);
+			add_path_texture(&game->so, line, "SO \n", &key);
 		if (!ft_strncmp(line, "WE", 2))
-			add_path_texture(&game->we, line, "WE ", &key);
+			add_path_texture(&game->we, line, "WE \n", &key);
 		if (!ft_strncmp(line, "EA", 2))
-			add_path_texture(&game->ea, line, "EA ", &key);
+			add_path_texture(&game->ea, line, "EA \n", &key);
 		if (!ft_strncmp(line, "F", 1))
 			add_color(game->f, line, &key);
 		if (!ft_strncmp(line, "C", 1))
@@ -174,24 +219,18 @@ int	parser(int argc, char *av, t_game *game)
 		return (ft_error("Error: invalid number of arguments"));
 	if (check_extension(av))
 		return (ft_error("Error: file must be in .cub extension"));
-	fd = open(av, O_RDONLY);
+	fd = open(av, O_RDONLY);//положить все в массив строк и работать с ним
 	if (fd == -1)
 		return (ft_error("Error: wrong path or file not exist"));
 	check_config_file(fd, game);
 	close(fd);
 	fd = open(av, O_RDONLY);
-	get_size_map(fd, game);//нужно положить карту в связный список(?) 
+	get_size_map(fd, game);
 	close(fd);
+	fd = open(av, O_RDONLY);
+	get_map(fd, game);//нужно положить карту в связный список(?) 
+	close(fd);
+	// print_game(game);
 	printf("parser is OK\n");//
 	return (0);
 }
-
-
-/*
-	printf("no -%s\n", game->no);//
-	printf("so -%s\n", game->so);//
-	printf("we -%s\n", game->we);//
-	printf("ea -%s\n", game->ea);//
-	printf("f -%d, %d, %d\n", game->f[0], game->f[1], game->f[2]);//
-	printf("c -%d, %d, %d\n", game->c[0], game->c[1], game->c[2]);//
-*/

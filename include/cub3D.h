@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/07/30 19:23:45 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/01 21:30:28 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		ft_error(char *str);
 void	cleaner(t_game *game);
 void	free_point_str(char **p_str);
 char	*get_next_line(int fd);
-char	*ft_strcpy(char *dest, char *src);
+// char	*ft_strcpy(char *dest, char *src);
 char	*ft_strjoin_gnl(char *s1, char const *s2);
 
 #endif

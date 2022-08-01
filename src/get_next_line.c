@@ -6,11 +6,27 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 19:09:54 by jg                #+#    #+#             */
-/*   Updated: 2022/07/27 21:13:12 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/01 21:28:44 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+char	*ft_strcpy(char *dest, char *src)
+{
+	int	i;
+
+	if (dest == NULL || src == NULL)
+		return (NULL);
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
 
 char	*ft_rem(char *rem)
 {
@@ -43,6 +59,8 @@ char	*ft_line(char *rem)
 	line = (char *)ft_calloc(i + 2, sizeof(char));
 	if (line == NULL)
 		return (NULL);
+	if (rem[i] == '\n')
+		line[i] = '\n';
 	while (i)
 	{
 		i--;
