@@ -3,31 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/01 22:26:03 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/06 14:37:14 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-// int	get_next_line(char **line)
-// {
-// 	int rd = 0;
-// 	int i = 0;
-// 	char ch;
-
-// 	char *buffer = malloc(100000);
-// 	*line = buffer;
-// 	while ((rd = read(0, &ch, 1)) > 0 && ch != '\n')
-// 	buffer[i++] = ch;
-// 	buffer[i] = '\0';
-// 	return (rd);
-// }
-
 void	print_game(t_game *game)//del
 {
+	int	i = 0;
 	printf("no -%s\n", game->no);
 	printf("so -%s\n", game->so);
 	printf("we -%s\n", game->we);
@@ -36,15 +23,26 @@ void	print_game(t_game *game)//del
 	printf("c - r=%d,\tg=%d,\tb=%d\n", game->c[0], game->c[1], game->c[2]);
 	printf("x - %d\n", game->x);
 	printf("y - %d\n", game->y);
+	if (game->map)
+	{
+		while (game->map[i])
+		{
+			printf("%s", game->map[i]);
+			i++;
+		}
+	}
+	printf("\nparser is OK\n");
 }
 
 void	get_map(int fd, t_game *game)//x = кол-во строк; y = кол-во столбцов
 {
 	char	*base;
 	char	*line[2];
+	int		i;
 
-	(void)game;
 	base = "NSWEFC\n";
+	i = 0;
+	game->map = (char **)ft_calloc(game->x + 1, sizeof(char *));
 	while (1)
 	{
 		line[0] = get_next_line(fd);
@@ -52,21 +50,23 @@ void	get_map(int fd, t_game *game)//x = кол-во строк; y = кол-во 
 			break ;
 		if (!ft_strchr(base, line[0][0]))
 		{
-			printf("map =\t%s", line[0]);//придумать как сохранить содержимое
+			game->map[i] = ft_substr(line[0], 0, ft_strlen(line[0]));
+			i++;
 			while (1)
 			{
 				line[1] = get_next_line(fd);
 				if (NULL == line[1])
 					break ;
-				printf("map =\t%s", line[1]);//придумать как сохранить содержимое
+				game->map[i] = ft_substr(line[1], 0, ft_strlen(line[1]));
 				free(line[1]);
+				i++;
 			}
 		}
 		free(line[0]);
 	}
 }
 
-void	get_size_map(int fd, t_game *game)//карта не может быть разорвана переносами каретки
+void	get_size_map(int fd, t_game *game)
 {
 	char	*base;
 	char	*line[2];
@@ -86,7 +86,7 @@ void	get_size_map(int fd, t_game *game)//карта не может быть р�
 				line[1] = get_next_line(fd);
 				if (NULL == line[1])
 					break ;
-				if (ft_strchr("\n", line[1][0]))// && ft_strchr(line[1], "01"))
+				if (ft_strchr("\n", line[1][0]))// && check_line(line[1])))//карта не может быть разорвана, может состоять только из " 01NSWE"
 					ft_error("Error: the map contains an invalid character(s)");
 				y = ft_strlen(line[1]);
 				if (game->y < y)
@@ -228,9 +228,8 @@ int	parser(int argc, char *av, t_game *game)
 	get_size_map(fd, game);
 	close(fd);
 	fd = open(av, O_RDONLY);
-	get_map(fd, game);//нужно положить карту в связный список(?) 
+	get_map(fd, game);//положил карту в массив строк game->map
 	close(fd);
-	// print_game(game);
-	printf("parser is OK\n");//
+	print_game(game);
 	return (0);
 }

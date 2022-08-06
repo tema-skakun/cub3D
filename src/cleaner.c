@@ -6,7 +6,7 @@
 /*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:03:08 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/07/30 18:41:19 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/06 14:12:44 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@ void	free_point_str(char **p_str)
 	int	i;
 
 	i = 0;
-	if (p_str != NULL)
-	{
-		while (p_str[i])
-			free(p_str[i++]);
-		free(p_str);
-	}
+	while (p_str[i])
+		free(p_str[i++]);
+	free(p_str);
 }
 
 void	cleaner(t_game *game)
@@ -35,6 +32,8 @@ void	cleaner(t_game *game)
 		free(game->we);
 	if (game->ea)
 		free(game->ea);
+	if (game->map)
+		free_point_str(game->map);
 	// if (game->f)
 	// 	free(game->f);
 	// if (game->f)
