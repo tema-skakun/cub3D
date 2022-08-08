@@ -6,7 +6,7 @@
 /*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/06 13:53:43 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/06 20:45:02 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_game
 	int		c[3];
 	int		x;
 	int		y;
-	char	hero;
+	int		hero;
 	char	**map;
 }				t_game;
 

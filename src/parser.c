@@ -6,7 +6,7 @@
 /*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/06 14:37:14 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/08 07:26:18 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,27 @@ void	get_map(int fd, t_game *game)//x = кол-во строк; y = кол-во 
 	}
 }
 
+int	check_line_and_hero(char *line, int *hero)//дописать
+{
+	int	i;
+
+	i = 0;
+	printf("%d\n", *hero);
+	while (line[i])
+	{
+		// printf("%c\n", line[i]);
+		if (ft_strchr("NSWE", line[i]))
+			*hero += 1;
+		if (!ft_strchr("NSWE10 \n", line[i]))
+			return (1);
+		i++;
+	}
+	printf("%d\n", *hero);
+	if (*hero != 1)
+		return (1);
+	return (0);
+}
+
 void	get_size_map(int fd, t_game *game)
 {
 	char	*base;
@@ -86,7 +107,7 @@ void	get_size_map(int fd, t_game *game)
 				line[1] = get_next_line(fd);
 				if (NULL == line[1])
 					break ;
-				if (ft_strchr("\n", line[1][0]))// && check_line(line[1])))//карта не может быть разорвана, может состоять только из " 01NSWE"
+				if (ft_strchr("\n", line[1][0]))// || check_line_and_hero(line[1], &game->hero))//карта не может быть разорвана, может состоять только из " 01NSWE"
 					ft_error("Error: the map contains an invalid character(s)");
 				y = ft_strlen(line[1]);
 				if (game->y < y)
@@ -230,6 +251,7 @@ int	parser(int argc, char *av, t_game *game)
 	fd = open(av, O_RDONLY);
 	get_map(fd, game);//положил карту в массив строк game->map
 	close(fd);
+	
 	print_game(game);
 	return (0);
 }
