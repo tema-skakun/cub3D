@@ -1,0 +1,15 @@
+NO ./maps/textures/texture_north
+SO ./maps/textures/texture_south
+WE ./maps/textures/texture_west
+EA ./maps/textures/texture_east
+
+F 220, 100, 0
+C 225, 30, 0
+
+
+
+
+
+11111
+ 10N01
+  11111
