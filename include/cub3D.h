@@ -20,7 +20,7 @@
 # include <stdlib.h>//malloc, free, exit
 # include <string.h>//strerror
 # include <math.h>
-// # include <mlx.h>
+# include <mlx.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -43,6 +43,7 @@ typedef struct s_game
 	int		y;
 	int		hero;
 	char	**map;
+	t_vars	*vars;
 }				t_game;
 
 int		parser(int argc, char *av, t_game *game);
@@ -52,5 +53,8 @@ void	free_point_str(char **p_str);
 char	*get_next_line(int fd);
 // char	*ft_strcpy(char *dest, char *src);
 char	*ft_strjoin_gnl(char *s1, char const *s2);
+
+// execute;
+void execute(t_game *game);
 
 #endif

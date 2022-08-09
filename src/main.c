@@ -18,6 +18,11 @@ int	main(int argc, char **argv)
 
 	game = (t_game){};
 	parser(argc, argv[1], &game);
+
+	execute(&game); // execute;
+
 	cleaner(&game);
+
+
 	return (0);
 }
