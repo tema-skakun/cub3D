@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/06 20:45:02 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/15 21:07:33 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ typedef struct s_game
 	int		y;
 	int		hero;
 	char	**map;
+	int		*digit_map;
 	t_vars	*vars;
 }				t_game;
 
+// parser;
 int		parser(int argc, char *av, t_game *game);
 int		ft_error(char *str);
 void	cleaner(t_game *game);
@@ -53,8 +55,17 @@ void	free_point_str(char **p_str);
 char	*get_next_line(int fd);
 // char	*ft_strcpy(char *dest, char *src);
 char	*ft_strjoin_gnl(char *s1, char const *s2);
+void	get_map(int fd, t_game *game);
+void	validation_check_map(char **map);
+void	add_path_texture(char **path, char *line, char *str, int *key);
+void	add_color(int *rgb, char *line, int *key);
+int		check_textures(t_game *game);
+void	convert_digit(int *rgb, char **digit);
 
 // execute;
 void execute(t_game *game);
+
+//del;
+void	print_game(t_game *game);
 
 #endif

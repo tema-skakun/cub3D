@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jg <jg@student.42.fr>                      +#+  +:+       +#+         #
+#    By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/07/30 17:52:08 by jg               ###   ########.fr        #
+#    Updated: 2022/08/15 21:01:02 by fdarkhaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME		= 	cub3D
 SRCS_DIR	= 	src/
 OBJS_DIR	= 	obj/
 INCS_DIR	= 	include
-SRCS_F		= 	main.c	parser.c		error.c		get_next_line.c \
-				get_next_line_utils.c	cleaner.c execute.c
+SRCS_F		= 	main.c	parser_0.c		error.c		get_next_line.c \
+				get_next_line_utils.c	cleaner.c execute.c \
+				parser_1.c	parser_2.c	print_utils.c
 
 SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_F))
 OBJS_F		= $(patsubst %.c, %.o, $(SRCS_F))
