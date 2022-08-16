@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/15 21:07:33 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/16 22:57:50 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ typedef struct s_game
 	char	*ea;
 	int		f[3];
 	int		c[3];
+	int		num_str;
 	int		x;
 	int		y;
+	int		len;
 	int		hero;
+	char	**file;
 	char	**map;
 	int		*digit_map;
 	t_vars	*vars;
@@ -55,12 +58,13 @@ void	free_point_str(char **p_str);
 char	*get_next_line(int fd);
 // char	*ft_strcpy(char *dest, char *src);
 char	*ft_strjoin_gnl(char *s1, char const *s2);
-void	get_map(int fd, t_game *game);
-void	validation_check_map(char **map);
+void	get_map(t_game *game, char *base);
+void	validation_check_map(t_game *game);
 void	add_path_texture(char **path, char *line, char *str, int *key);
 void	add_color(int *rgb, char *line, int *key);
 int		check_textures(t_game *game);
 void	convert_digit(int *rgb, char **digit);
+char	*return_word_and_plus_i(char *line, int *i);
 
 // execute;
 void execute(t_game *game);

@@ -6,11 +6,38 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/15 21:07:06 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/16 23:07:53 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	check_config_file(t_game *game)
+{
+	int	key;
+	int	i;
+
+	key = 0;
+	i = 0;
+	while (game->file[i])
+	{
+		if (!ft_strncmp(game->file[i], "NO", 2))
+			add_path_texture(&game->no, game->file[i], "NO \n", &key);
+		if (!ft_strncmp(game->file[i], "SO", 2))
+			add_path_texture(&game->so, game->file[i], "SO \n", &key);
+		if (!ft_strncmp(game->file[i], "WE", 2))
+			add_path_texture(&game->we, game->file[i], "WE \n", &key);
+		if (!ft_strncmp(game->file[i], "EA", 2))
+			add_path_texture(&game->ea, game->file[i], "EA \n", &key);
+		if (!ft_strncmp(game->file[i], "F", 1))
+			add_color(game->f, game->file[i], &key);
+		if (!ft_strncmp(game->file[i], "C", 1))
+			add_color(game->c, game->file[i], &key);
+		i++;
+	}
+	if (key != 6 || check_textures(game))
+		ft_error("Error: invalid configuration file");
+}
 
 int	check_textures(t_game *game)//проверка на существование файла текстур
 {
@@ -60,22 +87,25 @@ void	add_color(int *rgb, char *line, int *key)
 	*key += 1;
 }
 
-void	validation_check_map(char **map)
+void	validation_check_map(t_game *game)
 {
 	int	i;
 	int	j;
 	int	hero;
 
+	check_config_file(game);//проверить цвет на минус
 	hero = 0;
 	i = 0;
-	while (map[i])
+	while (game->map[i])
 	{
+		if (ft_strchr("\n", game->map[i][0]))//карта не может быть разорвана, может состоять только из " 01NSWE"
+			ft_error("Error: the map contains an invalid character(s)");
 		j = 0;
-		while (map[i][j])
+		while (game->map[i][j])
 		{
-			if (ft_strchr("NSWE", map[i][j]))
+			if (ft_strchr("NSWE", game->map[i][j]))
 				hero++;
-			if (!ft_strchr("NSWE10 \n", map[i][j]))
+			if (!ft_strchr("NSWE10 \n", game->map[i][j]))
 				ft_error("Error: the map contains an invalid character(s)");
 			j++;
 		}
@@ -86,34 +116,25 @@ void	validation_check_map(char **map)
 	// squaring_map(game);
 }
 
-void	get_map(int fd, t_game *game)
+void	get_map(t_game *game, char *base)
 {
-	char	*base;
-	char	*line[2];
-	int		i;
+	int	i;
+	int	j;
 
-	base = "NSWEFC\n";
-	i = 0;
+	i = -1;
+	j = 0;
 	game->map = (char **)ft_calloc(game->x + 1, sizeof(char *));
-	while (1)
+	while (game->file[j])
 	{
-		line[0] = get_next_line(fd);
-		if (NULL == line[0])
-			break ;
-		if (!ft_strchr(base, line[0][0]))
+		if (!ft_strchr(base, game->file[j][0]))
 		{
-			game->map[i] = ft_substr(line[0], 0, ft_strlen(line[0]));
-			i++;
-			while (1)
+			game->map[i] = return_word_and_plus_i(game->file[j], &i);
+			while (game->file[j])
 			{
-				line[1] = get_next_line(fd);
-				if (NULL == line[1])
-					break ;
-				game->map[i] = ft_substr(line[1], 0, ft_strlen(line[1]));
-				free(line[1]);
-				i++;
+				game->map[i] = return_word_and_plus_i(game->file[j], &i);
+				j++;
 			}
 		}
-		free(line[0]);
+		j++;
 	}
 }

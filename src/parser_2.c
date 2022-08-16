@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/15 21:07:46 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/16 22:27:59 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,13 @@ void	convert_digit(int *rgb, char **digit)
 		}
 		i++;
 	}
+}
+
+char	*return_word_and_plus_i(char *line, int *i)
+{
+	char	*str;
+
+	str = ft_substr(line, 0, ft_strlen(line));
+	*i += 1;
+	return (str);
 }
