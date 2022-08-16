@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/16 23:07:53 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/16 23:39:14 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,4 +137,5 @@ void	get_map(t_game *game, char *base)
 		}
 		j++;
 	}
+	game->map[++i] = NULL;
 }

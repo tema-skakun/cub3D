@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:03:08 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/06 14:12:44 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/16 23:29:05 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	cleaner(t_game *game)
 		free(game->ea);
 	if (game->map)
 		free_point_str(game->map);
-	// if (game->f)
-	// 	free(game->f);
-	// if (game->f)
-	// 	free(game->c);
+	if (game->file)
+		free_point_str(game->file);
 }

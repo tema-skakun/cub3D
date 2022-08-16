@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/16 23:12:28 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/16 23:34:25 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,22 @@ void	get_size_map(t_game *game, char *base)
 	}
 }
 
-void	get_size_file(char *av, t_game *game)
-{
-	char	*line;
-	int		fd;
+// void	get_size_file(char *av, t_game *game)
+// {
+// 	char	*line;
+// 	int		fd;
 
-	fd = return_fd(av);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (NULL == line)
-			break ;
-		game->num_str++;
-		free(line);
-	}
-	close(fd);
-}
+// 	fd = return_fd(av);
+// 	while (1)
+// 	{
+// 		line = get_next_line(fd);
+// 		if (NULL == line)
+// 			break ;
+// 		game->num_str++;
+// 		free(line);
+// 	}
+// 	close(fd);
+// }
 
 void	get_file(char *av, t_game *game)
 {
@@ -70,7 +70,7 @@ void	get_file(char *av, t_game *game)
 
 	fd = return_fd(av);
 	i = -1;
-	game->file = (char **)ft_calloc(game->num_str + 1, sizeof(char *));
+	game->file = (char **)ft_calloc(3000, sizeof(char *));
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -79,7 +79,9 @@ void	get_file(char *av, t_game *game)
 		game->file[i] = return_word_and_plus_i(line, &i);
 		free(line);
 	}
-	game->file[i] = NULL;
+	if (line)
+		free(line);
+	game->file[++i] = NULL;
 	close(fd);
 }
 
@@ -109,7 +111,7 @@ int	parser(int argc, char *av, t_game *game)
 		return (ft_error("Error: invalid number of arguments"));
 	if (check_extension(av))
 		return (ft_error("Error: file must be in .cub extension"));
-	get_size_file(av, game);
+	// get_size_file(av, game);
 	get_file(av, game);
 	get_size_map(game, base);
 	get_map(game, base);
