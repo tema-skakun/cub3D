@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/16 23:34:25 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/18 01:33:41 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int	return_fd(char *av)
-{
-	int	fd;
-
-	fd = open(av, O_RDONLY);
-	if (fd == -1)
-		return (ft_error("Error: wrong path or file not exist"));
-	return (fd);
-}
 
 void	get_size_map(t_game *game, char *base)
 {
@@ -68,7 +58,9 @@ void	get_file(char *av, t_game *game)
 	char	*line;
 	int		i;
 
-	fd = return_fd(av);
+	fd = open(av, O_RDONLY);
+	if (fd == -1)
+		ft_error("Error: wrong path or file not exist");
 	i = -1;
 	game->file = (char **)ft_calloc(3000, sizeof(char *));
 	while (1)

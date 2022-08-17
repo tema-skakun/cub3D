@@ -3,14 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   parser_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/16 23:39:14 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/18 01:34:21 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	check_colors(char **digits)//добавить проверку отсутствия цвета?
+{
+// или имеют значения выше 255 - этот кейс обработал в convert_digit
+	int		i;
+	int		j;
+	char	*base;
+
+	base = "0123456789,\n";
+	i = 1;
+	while (digits[i])
+	{
+		// printf("color = %s\n", digits[i]);
+		j = 0;
+		while (digits[i][j])
+		{
+			// printf("c = %c\n", digits[i][j]);
+			if (!ft_strchr(base, digits[i][j]))//они разделены недопустимым символом (не запятой) или отрицательные
+				ft_error("Error: invalid configuration file\n");
+			j++;
+		}
+		i++;
+	}
+	if (i != 4)//У RGB нет трех чисел
+		ft_error("Error: invalid configuration file\n");
+}
+
+void	add_path_texture(char **path, char *line, char *str, int *key)
+{
+	*path = ft_strtrim(line, str);
+	if (NULL == (*path))
+		ft_error("Error: memory was not allocated properly");
+	*key += 1;
+}
+
+void	add_color(int *rgb, char *line, int *key)
+{
+	char	**digits;
+
+	digits = ft_split(line, ' ');
+	if (NULL == digits)
+		ft_error("Error: memory was not allocated properly");
+	check_colors(digits);
+	convert_digit(rgb, digits);
+	free_point_str(digits);
+	*key += 1;
+}
 
 void	check_config_file(t_game *game)
 {
@@ -35,7 +82,7 @@ void	check_config_file(t_game *game)
 			add_color(game->c, game->file[i], &key);
 		i++;
 	}
-	if (key != 6 || check_textures(game))
+	if (key != 6 || check_textures(game))// || check_colors(game))
 		ft_error("Error: invalid configuration file");
 }
 
@@ -65,26 +112,6 @@ int	check_textures(t_game *game)//проверка на существовани
 		return (1);
 	close(file[3]);
 	return (0);
-}
-
-void	add_path_texture(char **path, char *line, char *str, int *key)
-{
-	*path = ft_strtrim(line, str);
-	if (NULL == (*path))
-		ft_error("Error: memory was not allocated properly");
-	*key += 1;
-}
-
-void	add_color(int *rgb, char *line, int *key)
-{
-	char	**digit;
-
-	digit = ft_split(line, ' ');
-	if (NULL == digit)
-		ft_error("Error: memory was not allocated properly");
-	convert_digit(rgb, digit);
-	free_point_str(digit);
-	*key += 1;
 }
 
 void	validation_check_map(t_game *game)

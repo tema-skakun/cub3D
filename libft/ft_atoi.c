@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 13:18:24 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2021/10/25 15:18:14 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/18 01:33:12 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(void)
 {
 	char	*mas;
 
-	mas = "  \t   \n  +42  jhgfd";
+	mas = "0j";
 	printf("ft	: %d\n", ft_atoi(mas));
 	printf("c	: %d\n", atoi(mas));
 	return (0);

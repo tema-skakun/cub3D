@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/16 22:27:59 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/18 01:29:44 by jg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	convert_digit(int *rgb, char **digit)
 		if (ft_atoi(digit[i]))
 		{
 			rgb[j] = ft_atoi(digit[i]);
+			printf("rgb = %d\n", rgb[j]);
+			if (rgb[j] > 255 || rgb[j] < 0)
+				ft_error("Error: invalid configuration file\n");
 			j++;
 		}
 		i++;
