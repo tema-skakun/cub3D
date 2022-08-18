@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/18 01:29:44 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/18 20:28:07 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	convert_digit(int *rgb, char **digit)
 			rgb[j] = ft_atoi(digit[i]);
 			printf("rgb = %d\n", rgb[j]);
 			if (rgb[j] > 255 || rgb[j] < 0)
-				ft_error("Error: invalid configuration file\n");
+				ft_error("Error: invalid configuration file");
 			j++;
 		}
 		i++;
@@ -50,6 +50,8 @@ char	*return_word_and_plus_i(char *line, int *i)
 	char	*str;
 
 	str = ft_substr(line, 0, ft_strlen(line));
+	if (NULL == str)
+		ft_error("Error: memory was not allocated properly");
 	*i += 1;
 	return (str);
 }

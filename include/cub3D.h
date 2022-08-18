@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/18 00:12:22 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/18 20:33:08 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_img
 	int		pos_y;
 }	t_img;
 
-
 typedef struct s_game
 {
 	char	*no;
@@ -80,11 +79,11 @@ void	free_point_str(char **p_str);
 char	*get_next_line(int fd);
 // char	*ft_strcpy(char *dest, char *src);
 char	*ft_strjoin_gnl(char *s1, char const *s2);
-void	get_map(t_game *game, char *base);
+// void	get_map(t_game *game, char *base);
 void	validation_check_map(t_game *game);
 // void	add_path_texture(char **path, char *line, char *str, int *key);
 // void	add_color(int *rgb, char *line, int *key);
-int		check_textures(t_game *game);
+// int		check_textures(t_game *game);
 void	convert_digit(int *rgb, char **digit);
 char	*return_word_and_plus_i(char *line, int *i);
 
