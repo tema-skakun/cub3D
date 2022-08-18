@@ -24,12 +24,33 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
+# define RADIAN 0.0174533
 
 typedef struct s_vars
 {
 	void	*mlx;
 	void	*win;
 }				t_vars;
+
+// execute need some parametres
+typedef struct s_info
+{
+	double player_pos_x;
+	double player_pos_y;
+	// 4 void*;
+}	t_info;
+
+typedef struct s_img
+{
+	void	*ptr;
+	char	*addr;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+	int		pos_x;
+	int		pos_y;
+}	t_img;
+
 
 typedef struct s_game
 {
@@ -48,6 +69,7 @@ typedef struct s_game
 	char	**map;
 	int		*digit_map;
 	t_vars	*vars;
+	t_info	*info;
 }				t_game;
 
 // parser;
