@@ -3,23 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   parser_0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/18 01:33:41 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/18 20:37:44 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	get_size_map(t_game *game, char *base)
+void	get_map(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	game->map = (char **)ft_calloc(game->x + 1, sizeof(char *));
+	if (NULL == game->map)
+		ft_error("Error: memory was not allocated properly");
+	while (game->file[j])
+	{
+		if (!ft_strchr("NSWEFC\n", game->file[j][0]))
+		{
+			game->map[i] = return_word_and_plus_i(game->file[j], &i);
+			while (game->file[j])
+			{
+				game->map[i] = return_word_and_plus_i(game->file[j], &i);
+				j++;
+			}
+		}
+		j++;
+	}
+	game->map[++i] = NULL;
+}
+
+void	get_size_map(t_game *game)
 {
 	int		i;
 
 	i = 0;
 	while (game->file[i])
 	{
-		if (!ft_strchr(base, game->file[i][0]))//пролистал файл конфигурации
+		if (!ft_strchr("NSWEFC\n", game->file[i][0]))//пролистал файл конфигурации
 		{
 			game->x++;
 			while (game->file[i])
@@ -63,6 +89,8 @@ void	get_file(char *av, t_game *game)
 		ft_error("Error: wrong path or file not exist");
 	i = -1;
 	game->file = (char **)ft_calloc(3000, sizeof(char *));
+	if (NULL == game->file)
+		ft_error("Error: memory was not allocated properly");
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -96,17 +124,14 @@ int	check_extension(char *str)
 
 int	parser(int argc, char *av, t_game *game)
 {
-	char	*base;
-
-	base = "NSWEFC\n";
 	if (argc != 2)
 		return (ft_error("Error: invalid number of arguments"));
 	if (check_extension(av))
 		return (ft_error("Error: file must be in .cub extension"));
 	// get_size_file(av, game);
 	get_file(av, game);
-	get_size_map(game, base);
-	get_map(game, base);
+	get_size_map(game);
+	get_map(game);
 	validation_check_map(game);
 	print_game(game);
 	return (0);

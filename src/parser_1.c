@@ -3,39 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   parser_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jg <jg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/18 01:34:21 by jg               ###   ########.fr       */
+/*   Updated: 2022/08/18 20:36:01 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	check_colors(char **digits)//добавить проверку отсутствия цвета?
-{
-// или имеют значения выше 255 - этот кейс обработал в convert_digit
+void	check_colors(char **digits)//добавить проверку отсутствия значения цвета? - F 220, , 0
+{//значения выше 255 - этот кейс обработал в convert_digit
 	int		i;
 	int		j;
-	char	*base;
+	int		comma;
 
-	base = "0123456789,\n";
 	i = 1;
+	comma = 0;
 	while (digits[i])
 	{
-		// printf("color = %s\n", digits[i]);
+		if (ft_strchr(digits[i], ','))
+			comma++;
 		j = 0;
 		while (digits[i][j])
 		{
-			// printf("c = %c\n", digits[i][j]);
-			if (!ft_strchr(base, digits[i][j]))//они разделены недопустимым символом (не запятой) или отрицательные
-				ft_error("Error: invalid configuration file\n");
+			if (!ft_strchr("0123456789,\n", digits[i][j]))//они разделены недопустимым символом (не запятой) или отрицательные
+				ft_error("Error: invalid configuration file");
 			j++;
 		}
 		i++;
 	}
-	if (i != 4)//У RGB нет трех чисел
-		ft_error("Error: invalid configuration file\n");
+	if (i != 4 || comma != 2)//У RGB нет трех чисел, нет двух запятых
+		ft_error("Error: invalid configuration file");
 }
 
 void	add_path_texture(char **path, char *line, char *str, int *key)
@@ -57,33 +56,6 @@ void	add_color(int *rgb, char *line, int *key)
 	convert_digit(rgb, digits);
 	free_point_str(digits);
 	*key += 1;
-}
-
-void	check_config_file(t_game *game)
-{
-	int	key;
-	int	i;
-
-	key = 0;
-	i = 0;
-	while (game->file[i])
-	{
-		if (!ft_strncmp(game->file[i], "NO", 2))
-			add_path_texture(&game->no, game->file[i], "NO \n", &key);
-		if (!ft_strncmp(game->file[i], "SO", 2))
-			add_path_texture(&game->so, game->file[i], "SO \n", &key);
-		if (!ft_strncmp(game->file[i], "WE", 2))
-			add_path_texture(&game->we, game->file[i], "WE \n", &key);
-		if (!ft_strncmp(game->file[i], "EA", 2))
-			add_path_texture(&game->ea, game->file[i], "EA \n", &key);
-		if (!ft_strncmp(game->file[i], "F", 1))
-			add_color(game->f, game->file[i], &key);
-		if (!ft_strncmp(game->file[i], "C", 1))
-			add_color(game->c, game->file[i], &key);
-		i++;
-	}
-	if (key != 6 || check_textures(game))// || check_colors(game))
-		ft_error("Error: invalid configuration file");
 }
 
 int	check_textures(t_game *game)//проверка на существование файла текстур
@@ -114,13 +86,40 @@ int	check_textures(t_game *game)//проверка на существовани
 	return (0);
 }
 
+void	check_config_file(t_game *game)
+{
+	int	key;
+	int	i;
+
+	key = 0;
+	i = 0;
+	while (game->file[i])
+	{
+		if (!ft_strncmp(game->file[i], "NO", 2))
+			add_path_texture(&game->no, game->file[i], "NO \n", &key);
+		if (!ft_strncmp(game->file[i], "SO", 2))
+			add_path_texture(&game->so, game->file[i], "SO \n", &key);
+		if (!ft_strncmp(game->file[i], "WE", 2))
+			add_path_texture(&game->we, game->file[i], "WE \n", &key);
+		if (!ft_strncmp(game->file[i], "EA", 2))
+			add_path_texture(&game->ea, game->file[i], "EA \n", &key);
+		if (!ft_strncmp(game->file[i], "F", 1))
+			add_color(game->f, game->file[i], &key);
+		if (!ft_strncmp(game->file[i], "C", 1))
+			add_color(game->c, game->file[i], &key);
+		i++;
+	}
+	if (key != 6 || check_textures(game))
+		ft_error("Error: invalid configuration file");
+}
+
 void	validation_check_map(t_game *game)
 {
 	int	i;
 	int	j;
 	int	hero;
 
-	check_config_file(game);//проверить цвет на минус
+	check_config_file(game);
 	hero = 0;
 	i = 0;
 	while (game->map[i])
@@ -141,28 +140,4 @@ void	validation_check_map(t_game *game)
 	if (hero != 1)
 		ft_error("Error: too many heroes");
 	// squaring_map(game);
-}
-
-void	get_map(t_game *game, char *base)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	j = 0;
-	game->map = (char **)ft_calloc(game->x + 1, sizeof(char *));
-	while (game->file[j])
-	{
-		if (!ft_strchr(base, game->file[j][0]))
-		{
-			game->map[i] = return_word_and_plus_i(game->file[j], &i);
-			while (game->file[j])
-			{
-				game->map[i] = return_word_and_plus_i(game->file[j], &i);
-				j++;
-			}
-		}
-		j++;
-	}
-	game->map[++i] = NULL;
 }
