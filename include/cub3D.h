@@ -37,6 +37,7 @@ typedef struct s_info
 {
 	double player_pos_x;
 	double player_pos_y;
+	double view;
 	// 4 void*;
 }	t_info;
 
@@ -47,8 +48,6 @@ typedef struct s_img
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
-	int		pos_x;
-	int		pos_y;
 }	t_img;
 
 
