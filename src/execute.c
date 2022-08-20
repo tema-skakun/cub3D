@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
+/*   Updated: 2022/08/20 19:21:10 by mmeredit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "cub3D.h"
 
 void 	set_map(t_game *game);
@@ -107,7 +119,7 @@ void	draw_floor_ceilling(t_game *game)
 	mlx_put_image_to_window(game->vars->mlx, game->vars->win, img.ptr, 0, 0);
 }
 
-void	draw_country(t_game *game, double x, double y, double length, int color)
+void	draw_country(t_game *game, double x, double y, double length, int color, int c)
 {
 	char	**map;
 	double		k;
@@ -115,21 +127,20 @@ void	draw_country(t_game *game, double x, double y, double length, int color)
 	double		down;
 	// int		d;
 	
-
 	map = game->map;
 	// printf ("x1 = %f  y1 = %f\n", x, y);
-	k = length; // длина до стены
+	k = length * 32; // длина до стены
 	up = game->y * 16 + k * 32;
 	down = game->x * 16;
 	x += game->y * 16; // координата центра карты + координата точки по (y) или (x) для массива
 	y += game->x * 16; // координата центра карты + координата точки по (x) или (y) для массива
-	// printf ("x = %f  y = %f k = %f\n", x, y, k);
-	up = game->y * 16 + k * 32;
-	while (k > 0)
+	printf ("x = %f  y = %f k = %f\n", x, y, k);
+	up = game->x * 32 - k;
+	while (k < up )
 	{
 		
-		mlx_pixel_put(game->vars->mlx, game->vars->win, x, y, color);
-		k--;
+		mlx_pixel_put(game->vars->mlx, game->vars->win, c, k, color);
+		k++;
 		
 		// x++;
 	}
@@ -203,7 +214,7 @@ void	some_raycasting(t_game *game)
 			j = game->info->player_pos_x + pixel * cos(RADIAN * counter);
 			pixel += 0.05;
 		}
-		draw_country(game, i, j, pixel, color);
+		draw_country(game, i, j, pixel - 0.05, color, k++);
 		pixel = 0;
 		i = game->info->player_pos_y;
 		j = game->info->player_pos_x;
