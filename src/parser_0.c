@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/18 20:37:44 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/21 23:03:55 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	get_map(t_game *game)
 {
-	int	i;
-	int	j;
+	int	i;//счётчик по map
+	int	j;//счётчик по file
 
-	i = -1;
+	i = 0;
 	j = 0;
 	game->map = (char **)ft_calloc(game->x + 1, sizeof(char *));
 	if (NULL == game->map)
@@ -26,11 +26,13 @@ void	get_map(t_game *game)
 	{
 		if (!ft_strchr("NSWEFC\n", game->file[j][0]))
 		{
-			game->map[i] = return_word_and_plus_i(game->file[j], &i);
 			while (game->file[j])
 			{
-				game->map[i] = return_word_and_plus_i(game->file[j], &i);
+				game->map[i] =  ft_substr(game->file[j], 0, ft_strlen(game->file[j]));
+				if (NULL == game->map[i])
+					ft_error("Error: memory was not allocated properly");
 				j++;
+				i++;
 			}
 		}
 		j++;
@@ -85,6 +87,9 @@ void	get_file(char *av, t_game *game)
 	int		i;
 
 	fd = open(av, O_RDONLY);
+	// printf("1 = %d\n", fd);
+	// close(fd);//почему здесь нельзя закрыть fd?
+	// printf("2 = %d\n", fd);
 	if (fd == -1)
 		ft_error("Error: wrong path or file not exist");
 	i = -1;
@@ -99,10 +104,10 @@ void	get_file(char *av, t_game *game)
 		game->file[i] = return_word_and_plus_i(line, &i);
 		free(line);
 	}
+	close(fd);
+	game->file[++i] = NULL;
 	if (line)
 		free(line);
-	game->file[++i] = NULL;
-	close(fd);
 }
 
 int	check_extension(char *str)

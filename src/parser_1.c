@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/18 20:36:01 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/21 23:04:21 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	check_colors(char **digits)//добавить проверку отсутствия значения цвета? - F 220, , 0
+void	check_colors(char **digits)
 {//значения выше 255 - этот кейс обработал в convert_digit
 	int		i;
 	int		j;
@@ -22,11 +22,13 @@ void	check_colors(char **digits)//добавить проверку отсутс
 	comma = 0;
 	while (digits[i])
 	{
-		if (ft_strchr(digits[i], ','))
-			comma++;
+		if (2 > ft_strlen(digits[i]))//проверка отсутствия значения цвета - F 220, , 0
+			ft_error("Error: invalid configuration file");
 		j = 0;
 		while (digits[i][j])
 		{
+			if (ft_strchr(",", digits[i][j]))
+				comma++;
 			if (!ft_strchr("0123456789,\n", digits[i][j]))//они разделены недопустимым символом (не запятой) или отрицательные
 				ft_error("Error: invalid configuration file");
 			j++;
@@ -65,24 +67,26 @@ int	check_textures(t_game *game)//проверка на существовани
 
 	file[0] = open(game->no, O_RDONLY);//файл есть?
 	ret[0] = read(file[0], NULL, 0);//это не папка?
+	// printf("1ct = %d\n", file[0]);
+	close(file[0]);//здесь можно закрывать fd?
+	// printf("2ct = %d\n", file[0]);
 	if (file[0] == -1 || ret[0] == -1)
 		return (1);
-	close(file[0]);
 	file[1] = open(game->so, O_RDONLY);
 	ret[1] = read(file[1], NULL, 0);
+	close(file[1]);//здесь можно закрывать fd?
 	if (file[1] == -1 || ret[1] == -1)
 		return (1);
-	close(file[1]);
 	file[2] = open(game->ea, O_RDONLY);
 	ret[2] = read(file[2], NULL, 0);
+	close(file[2]);//здесь можно закрывать fd?
 	if (file[2] == -1 || ret[2] == -1)
 		return (1);
-	close(file[2]);
 	file[3] = open(game->we, O_RDONLY);
 	ret[3] = read(file[3], NULL, 0);
+	close(file[3]);//здесь можно закрывать fd?
 	if (file[3] == -1 || ret[3] == -1)
 		return (1);
-	close(file[3]);
 	return (0);
 }
 
@@ -139,5 +143,5 @@ void	validation_check_map(t_game *game)
 	}
 	if (hero != 1)
 		ft_error("Error: too many heroes");
-	// squaring_map(game);
+	squaring_map(game);
 }

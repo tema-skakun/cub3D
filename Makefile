@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+         #
+#    By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/08/15 21:01:02 by fdarkhaw         ###   ########.fr        #
+#    Updated: 2022/08/21 22:01:28 by ulagrezina       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

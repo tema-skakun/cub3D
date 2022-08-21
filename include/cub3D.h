@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/18 20:33:08 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/21 22:33:28 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,20 @@ typedef struct s_img
 
 typedef struct s_game
 {
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	int		f[3];
-	int		c[3];
-	int		num_str;
-	int		x;
-	int		y;
-	int		len;
-	int		hero;
-	char	**file;
-	char	**map;
-	int		*digit_map;
+	char	*no;//северная текстура
+	char	*so;//южная
+	char	*we;//западная
+	char	*ea;//восточная
+	int		f[3];//цвет F
+	int		c[3];//цвет C
+	int		num_str;//считал кол-во строк в файле (сейчас малочу по дефолту 3000)
+	int		x;//кол-во строк
+	int		y;//максимальное кол-во столбцов
+	int		len;//временная переменная для поиска длиннейшей строки
+	int		hero;//кол-во героев на карте
+	char	**file;//здесь лежит весь файл
+	char	**map;//это карта без конфигураций
+	char	**square_map;//квадратная карта
 	t_vars	*vars;
 	t_info	*info;
 }				t_game;
@@ -85,6 +85,7 @@ void	validation_check_map(t_game *game);
 // int		check_textures(t_game *game);
 void	convert_digit(int *rgb, char **digit);
 char	*return_word_and_plus_i(char *line, int *i);
+void	squaring_map(t_game *game);
 
 // execute;
 void execute(t_game *game);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/08/20 19:21:10 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/08/21 22:02:57 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,17 +121,17 @@ void	draw_floor_ceilling(t_game *game)
 
 void	draw_country(t_game *game, double x, double y, double length, int color, int c)
 {
-	char	**map;
+	// char	**map;
 	double		k;
 	double		up;
-	double		down;
+	// double		down;
 	// int		d;
 	
-	map = game->map;
+	// map = game->map;
 	// printf ("x1 = %f  y1 = %f\n", x, y);
 	k = length * 32; // длина до стены
 	up = game->y * 16 + k * 32;
-	down = game->x * 16;
+	// down = game->x * 16;
 	x += game->y * 16; // координата центра карты + координата точки по (y) или (x) для массива
 	y += game->x * 16; // координата центра карты + координата точки по (x) или (y) для массива
 	printf ("x = %f  y = %f k = %f\n", x, y, k);
