@@ -10,8 +10,8 @@ void	print_game(t_game *game)//del
 	// printf("ea -%s\n", game->ea);
 	// printf("f - r=%d,\tg=%d,\tb=%d\n", game->f[0], game->f[1], game->f[2]);
 	// printf("c - r=%d,\tg=%d,\tb=%d\n", game->c[0], game->c[1], game->c[2]);
-	// printf("x - %d\n", game->x);
-	// printf("y - %d\n", game->y);
+	printf("x - %d\n", game->x);
+	printf("y - %d\n", game->y);
 
 	if (game->square_map)
 	{

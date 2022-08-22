@@ -6,7 +6,7 @@
 #    By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/08/21 22:01:28 by ulagrezina       ###   ########.fr        #
+#    Updated: 2022/08/22 21:41:00 by ulagrezina       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ DEPS		= $(addprefix $(OBJS_DIR), $(DEPS_F))
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -MMD -O2
-FSA			= -fsanitize=address
+FSA			= -fsanitize=address -g
 LFLAGS		= -Llibft -lft
 LIB			= libft.a
 LIB_DIR		= libft/

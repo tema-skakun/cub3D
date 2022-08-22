@@ -6,15 +6,40 @@
 /*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/21 22:47:34 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/08/22 22:45:05 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+void	check_neigbour_char(t_game *game, int str, int col)
+{
+	if (str == 0 || col == 0 || str == (game->x - 2) || col == (game->y - 2))
+			ft_error("Error: Map is not close");//границы карты не должны содержать 0
+	else if (ft_strchr("8", game->square_map[str - 1][col]))//check up
+		ft_error("Error: Map is not close");
+	else if (ft_strchr("8", game->square_map[str][col - 1]))//check left
+		ft_error("Error: Map is not close");
+	else if (ft_strchr("8", game->square_map[str + 1][col]))//check down
+		ft_error("Error: Map is not close");
+	else if (ft_strchr("8", game->square_map[str][col + 1]))//check right
+		ft_error("Error: Map is not close");
+}
+
 void	check_close_map(t_game *game)
 {
+	int	str = -1;
+	int	col;
 	(void)game;
+	while (game->square_map[++str])
+	{
+		col = -1;
+		while (game->square_map[str][++col])
+		{
+			if (ft_strchr("0NSWE", game->square_map[str][col]))//когда встретил ноль или героя - действуй
+				check_neigbour_char(game, str, col);
+		}
+	}
 }
 
 void	ft_bzero_8(void *s, size_t n)
@@ -24,8 +49,20 @@ void	ft_bzero_8(void *s, size_t n)
 	ptr = (char *)s;
 	while (n--)
 		*ptr++ = '8';
-	*ptr++ = '\0';
+	*ptr = '\0';
 }
+
+// void	ft_bzero_8(void *s, size_t n)
+// {
+// 	char	*ptr;
+// 	int		i = 0;
+
+// 	ptr = (char *)s;
+// 	while (n--)
+// 		ptr[i++] = '8';
+// 	ptr[i] = '\0';
+// 	printf("ft_8 i = %d\n", i);
+// }
 
 void	*ft_calloc_8(size_t count, size_t size)
 {
