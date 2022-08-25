@@ -6,7 +6,7 @@
 /*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/21 22:33:28 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/08/25 22:53:39 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_game
 }				t_game;
 
 // parser;
-int		parser(int argc, char *av, t_game *game);
+void		parser(int argc, char *av, t_game *game);
 int		ft_error(char *str);
 void	cleaner(t_game *game);
 void	free_point_str(char **p_str);
@@ -80,11 +80,13 @@ char	*get_next_line(int fd);
 char	*ft_strjoin_gnl(char *s1, char const *s2);
 // void	get_map(t_game *game, char *base);
 void	validation_check_map(t_game *game);
+void	check_colors(char **digits);
 // void	add_path_texture(char **path, char *line, char *str, int *key);
 // void	add_color(int *rgb, char *line, int *key);
 // int		check_textures(t_game *game);
 void	convert_digit(int *rgb, char **digit);
 char	*return_word_and_plus_i(char *line, int *i);
+void	*ft_calloc_8(size_t count, size_t size);
 void	squaring_map(t_game *game);
 
 // execute;

@@ -6,7 +6,7 @@
 /*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/22 21:39:48 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/08/25 22:41:03 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,17 +127,16 @@ int	check_extension(char *str)
 	return (0);
 }
 
-int	parser(int argc, char *av, t_game *game)
+void	parser(int argc, char *av, t_game *game)
 {
 	if (argc != 2)
-		return (ft_error("Error: invalid number of arguments"));
+		ft_error("Error: invalid number of arguments");
 	if (check_extension(av))
-		return (ft_error("Error: file must be in .cub extension"));
+		ft_error("Error: file must be in .cub extension");
 	// get_size_file(av, game);
 	get_file(av, game);
 	get_size_map(game);
 	get_map(game);
 	validation_check_map(game);
 	print_game(game);
-	return (0);
 }

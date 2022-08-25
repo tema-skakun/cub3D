@@ -6,38 +6,11 @@
 /*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/21 23:04:21 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/08/25 22:49:04 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	check_colors(char **digits)
-{//значения выше 255 - этот кейс обработал в convert_digit
-	int		i;
-	int		j;
-	int		comma;
-
-	i = 1;
-	comma = 0;
-	while (digits[i])
-	{
-		if (2 > ft_strlen(digits[i]))//проверка отсутствия значения цвета - F 220, , 0
-			ft_error("Error: invalid configuration file");
-		j = 0;
-		while (digits[i][j])
-		{
-			if (ft_strchr(",", digits[i][j]))
-				comma++;
-			if (!ft_strchr("0123456789,\n", digits[i][j]))//они разделены недопустимым символом (не запятой) или отрицательные
-				ft_error("Error: invalid configuration file");
-			j++;
-		}
-		i++;
-	}
-	if (i != 4 || comma != 2)//У RGB нет трех чисел, нет двух запятых
-		ft_error("Error: invalid configuration file");
-}
 
 void	add_path_texture(char **path, char *line, char *str, int *key)
 {

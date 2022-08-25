@@ -6,11 +6,38 @@
 /*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/22 22:45:05 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/08/25 22:52:42 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	check_colors(char **digits)
+{//значения выше 255 - этот кейс обработал в convert_digit
+	int		i;
+	int		j;
+	int		comma;
+
+	i = 1;
+	comma = 0;
+	while (digits[i])
+	{
+		if (2 > ft_strlen(digits[i]))//проверка отсутствия значения цвета - F 220, , 0
+			ft_error("Error: invalid configuration file");
+		j = 0;
+		while (digits[i][j])
+		{
+			if (ft_strchr(",", digits[i][j]))
+				comma++;
+			if (!ft_strchr("0123456789,\n", digits[i][j]))//они разделены недопустимым символом (не запятой) или отрицательные
+				ft_error("Error: invalid configuration file");
+			j++;
+		}
+		i++;
+	}
+	if (i != 4 || comma != 2)//У RGB нет трех чисел, нет двух запятых
+		ft_error("Error: invalid configuration file");
+}
 
 void	check_neigbour_char(t_game *game, int str, int col)
 {
@@ -42,39 +69,6 @@ void	check_close_map(t_game *game)
 	}
 }
 
-void	ft_bzero_8(void *s, size_t n)
-{
-	char	*ptr;
-
-	ptr = (char *)s;
-	while (n--)
-		*ptr++ = '8';
-	*ptr = '\0';
-}
-
-// void	ft_bzero_8(void *s, size_t n)
-// {
-// 	char	*ptr;
-// 	int		i = 0;
-
-// 	ptr = (char *)s;
-// 	while (n--)
-// 		ptr[i++] = '8';
-// 	ptr[i] = '\0';
-// 	printf("ft_8 i = %d\n", i);
-// }
-
-void	*ft_calloc_8(size_t count, size_t size)
-{
-	void	*mem;
-
-	mem = malloc(count * size);
-	if (mem == NULL)
-		return (NULL);
-	ft_bzero_8(mem, size * count);
-	return (mem);
-}
-
 void	squaring_map(t_game *game)//x = кол-во строк; y = максимальное кол-во столбцов
 {
 	int	i;
@@ -87,8 +81,6 @@ void	squaring_map(t_game *game)//x = кол-во строк; y = максима�
 	while (game->map[i])
 	{
 		game->square_map[i] = (char *)ft_calloc_8(game->y - 1, sizeof(char));
-		if (NULL == game->square_map[i])
-			ft_error("Error: memory was not allocated properly");
 		j = 0;
 		while (game->map[i][j])
 		{
@@ -122,13 +114,3 @@ void	convert_digit(int *rgb, char **digit)
 	}
 }
 
-char	*return_word_and_plus_i(char *line, int *i)
-{
-	char	*str;
-
-	str = ft_substr(line, 0, ft_strlen(line));
-	if (NULL == str)
-		ft_error("Error: memory was not allocated properly");
-	*i += 1;
-	return (str);
-}
