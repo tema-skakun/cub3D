@@ -71,9 +71,9 @@ static void	draw_floor_ceilling(t_game *game)
 	mlx_destroy_image(game->vars->mlx, img.ptr);
 }
 
-void 	set_map(t_game *game)
+void	set_map(t_game *game)
 {
-    mlx_clear_window(game->vars->mlx, game->vars->win);
+	mlx_clear_window(game->vars->mlx, game->vars->win);
 	draw_floor_ceilling(game); // заполнение пола и неба
 	set_minimap(game);	// заполнение миникарты (временное решение. Создано для удобной отладки)
 	some_raycasting(game); // raycasting

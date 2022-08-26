@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/26 19:46:40 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/08/26 21:02:17 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_game
 	char	*ea;//восточная
 	int		f[3];//цвет F
 	int		c[3];//цвет C
-	int		num_str;//считал кол-во строк в файле (сейчас малочу по дефолту 3000)
+	// int		num_str;//считал кол-во строк в файле (сейчас малочу по дефолту 3000)
 	int		x;//кол-во строк
 	int		y;//максимальное кол-во столбцов
 	int		len;//временная переменная для поиска длиннейшей строки
@@ -89,6 +89,7 @@ void	convert_digit(int *rgb, char **digit);
 char	*return_word_and_plus_i(char *line, int *i);
 void	*ft_calloc_8(size_t count, size_t size);
 void	squaring_map(t_game *game);
+void	from_file_to_map(char **map, char **file, int *i, int *j);
 
 // execute;
 void	execute(t_game *game);

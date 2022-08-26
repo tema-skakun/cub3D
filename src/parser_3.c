@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/25 22:52:46 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/08/26 20:48:45 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,13 @@ void	*ft_calloc_8(size_t count, size_t size)
 		ft_error("Error: memory was not allocated properly");
 	ft_bzero_8(mem, size * count);
 	return (mem);
+}
+
+void	from_file_to_map(char **map, char **file, int *i, int *j)
+{
+	*map = ft_substr(*file, 0, ft_strlen(*file));
+	if (NULL == map)
+		ft_error("Error: memory was not allocated properly");
+	*j += 1;
+	*i += 1;
 }

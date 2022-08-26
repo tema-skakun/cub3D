@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/25 22:49:04 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/08/26 20:53:18 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ int	check_textures(t_game *game)//проверка на существовани
 
 	file[0] = open(game->no, O_RDONLY);//файл есть?
 	ret[0] = read(file[0], NULL, 0);//это не папка?
-	// printf("1ct = %d\n", file[0]);
 	close(file[0]);//здесь можно закрывать fd?
-	// printf("2ct = %d\n", file[0]);
 	if (file[0] == -1 || ret[0] == -1)
 		return (1);
 	file[1] = open(game->so, O_RDONLY);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/26 15:01:06 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/08/26 20:57:01 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,7 @@ void	get_map(t_game *game)
 		if (!ft_strchr("NSWEFC\n", game->file[j][0]))
 		{
 			while (game->file[j])
-			{
-				game->map[i] =  ft_substr(game->file[j], 0, ft_strlen(game->file[j]));
-				if (NULL == game->map[i])
-					ft_error("Error: memory was not allocated properly");
-				j++;
-				i++;
-			}
+				from_file_to_map(&game->map[i], &game->file[j], &i, &j);
 		}
 		j++;
 	}
@@ -63,22 +57,24 @@ void	get_size_map(t_game *game)
 	}
 }
 
-// void	get_size_file(char *av, t_game *game)
-// {
-// 	char	*line;
-// 	int		fd;
+/*
+void	get_size_file(char *av, t_game *game)
+{
+	char	*line;
+	int		fd;
 
-// 	fd = return_fd(av);
-// 	while (1)
-// 	{
-// 		line = get_next_line(fd);
-// 		if (NULL == line)
-// 			break ;
-// 		game->num_str++;
-// 		free(line);
-// 	}
-// 	close(fd);
-// }
+	fd = return_fd(av);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (NULL == line)
+			break ;
+		game->num_str++;
+		free(line);
+	}
+	close(fd);
+}
+*/
 
 void	get_file(char *av, t_game *game)
 {

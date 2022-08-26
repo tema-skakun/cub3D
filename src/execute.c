@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/08/26 19:45:51 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/08/26 21:31:29 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,22 @@ void	full_raycasting(t_game *game, double *i, double *j, double degree)
 	if (degree > 0 && degree < PI)
 	{
 		dy = ceil(*i - 1);
-		dx = *j + 1/tan(degree);
+		dx = *j + 1 / tan(degree);
 	}
 	else if (degree > PI)
 	{
 		dy = trunc(*i + 1);
-		dx = *j - 1/tan(degree);
+		dx = *j - 1 / tan(degree);
 	}
 	else
 	{
 		dy = *i;
 		dx = ceil(*j + cos(degree));
-		if	(cos(degree) > 0)
+		if (cos(degree) > 0)
 			dx = trunc(*j + cos(degree));
 	}
-	
 	cx = dx;
 	cy = dy;
-
 	// vertical line
 	if (degree < PI / 2 || degree > 3 * PI / 2)
 	{
@@ -85,12 +83,10 @@ void	draw_country(t_game *game, double x, double y, double length, int color, in
 	k = length * 32; // длина до стены
 	// up = game->y * 16 + k * 32;
 	up = game->x * 32 - k;
-	while (k <= up )
+	while (k <= up)
 	{
-		
 		mlx_pixel_put(game->vars->mlx, game->vars->win, c, k, color);
 		k++;
-		
 		// x++;
 	}
 	// while()
@@ -114,7 +110,6 @@ void	some_raycasting(t_game *game)
 
 	k = 0;
 	map = game->map;
-	
 	// (game->y - 1) * 32 / 60 - количество лучей которые нужно отбросить. // 
 	// printf ("map = %c\n", map[(int)i][(int)j]);
 	pixel = 0;
@@ -136,13 +131,10 @@ void	some_raycasting(t_game *game)
 	}
 }
 
-
-
 void execute(t_game *game)
 {
 	init_info(game); // Инициализация данных
 	set_map(game); // Исполнения
 	mlx_hook(game->vars->win, 2, 0, &move, game);
     mlx_loop(game->vars->mlx);
-
 }

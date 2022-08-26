@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:42:07 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/26 14:57:26 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/08/26 20:56:53 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv)
 	execute(&game); // execute;
 
 	cleaner(&game);
-
 
 	return (0);
 }

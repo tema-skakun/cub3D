@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/25 22:52:42 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/08/26 20:55:48 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	check_close_map(t_game *game)
 	}
 }
 
-void	squaring_map(t_game *game)//x = кол-во строк; y = максимальное кол-во столбцов
-{
+void	squaring_map(t_game *game)
+{//x = кол-во строк; y = максимальное кол-во столбцов
 	int	i;
 	int	j;
 
@@ -113,4 +113,3 @@ void	convert_digit(int *rgb, char **digit)
 		i++;
 	}
 }
-
