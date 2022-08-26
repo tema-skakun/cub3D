@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+         #
+#    By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/08/25 22:54:05 by ulagrezina       ###   ########.fr        #
+#    Updated: 2022/08/26 15:34:28 by mmeredit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ OBJS_DIR	= 	obj/
 INCS_DIR	= 	include
 SRCS_F		= 	main.c	parser_0.c		error.c		get_next_line.c \
 				get_next_line_utils.c	cleaner.c execute.c \
-				parser_1.c	parser_2.c	parser_3.c	print_utils.c
+				parser_1.c	parser_2.c	parser_3.c	print_utils.c	\
+				draw.c	init_execute_info.c	button_execute.c
 
 SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_F))
 OBJS_F		= $(patsubst %.c, %.o, $(SRCS_F))

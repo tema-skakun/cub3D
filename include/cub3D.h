@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/25 22:53:39 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/08/26 19:46:40 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 # define RADIAN 0.0174533
+# define PI		3.1415926
 
 typedef struct s_vars
 {
@@ -90,7 +91,13 @@ void	*ft_calloc_8(size_t count, size_t size);
 void	squaring_map(t_game *game);
 
 // execute;
-void execute(t_game *game);
+void	execute(t_game *game);
+void	init_info(t_game *game);
+int		argb_to_int(int a, int r, int g, int b);
+void 	set_map(t_game *game);
+void	some_raycasting(t_game *game);
+double	from_zero_to_pi(double degree);
+int		move(int keycode, t_game *game);
 
 //del;
 void	print_game(t_game *game);
