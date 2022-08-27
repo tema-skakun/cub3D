@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/08/26 21:31:29 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/27 16:59:37 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,35 @@ void	full_raycasting(t_game *game, double *i, double *j, double degree)
 	if (degree > 0 && degree < PI)
 	{
 		dy = ceil(*i - 1);
-		dx = *j + 1 / tan(degree);
+		dx = *j + (*i - dy) * 1/tan(degree);
 	}
 	else if (degree > PI)
 	{
 		dy = trunc(*i + 1);
-		dx = *j - 1 / tan(degree);
+		dx = *j - (dy - *i) * 1/tan(degree);
 	}
 	else
 	{
 		dy = *i;
 		dx = ceil(*j + cos(degree));
-		if (cos(degree) > 0)
+		if	(cos(degree) > 0)
 			dx = trunc(*j + cos(degree));
 	}
+	
+
 	cx = dx;
 	cy = dy;
+
 	// vertical line
 	if (degree < PI / 2 || degree > 3 * PI / 2)
 	{
 		dx = trunc(*j + 1);
-		dy = *i - tan(degree);
+		dy = *i - (dx - *j) * tan(degree);
 	}
-	else if (degree != PI / 2 && degree != 3 * PI / 2)
+	else if (degree > PI / 2 || degree < 3 * PI / 2)
 	{
 		dx = ceil(*j - 1);
-		dy = *i + tan(degree);
+		dy = *i + (*j - dx) * tan(degree);
 	}
 	else
 	{
@@ -83,7 +86,7 @@ void	draw_country(t_game *game, double x, double y, double length, int color, in
 	k = length * 32; // длина до стены
 	// up = game->y * 16 + k * 32;
 	up = game->x * 32 - k;
-	while (k <= up)
+	while (k < up)
 	{
 		mlx_pixel_put(game->vars->mlx, game->vars->win, c, k, color);
 		k++;
@@ -107,27 +110,28 @@ void	some_raycasting(t_game *game)
 	char	**map;
 	double	pixel;
 	int 	k;
+	double	fov1;
+	double	fov2;
 
+	fov1 = game->info->view + PI / 6;
+	fov2 = game->info->view - PI / 6;
 	k = 0;
 	map = game->map;
-	// (game->y - 1) * 32 / 60 - количество лучей которые нужно отбросить. // 
-	// printf ("map = %c\n", map[(int)i][(int)j]);
 	pixel = 0;
-	double counter = game->info->view / RADIAN;
-	while (counter < game->info->view / RADIAN + 60)
+	while (fov2 <= fov1)
 	{
 		while (map[(int)i][(int)j] && map[(int)i][(int)j] != '1')
 		{
-			// mlx_pixel_put(game->vars->mlx, game->vars->win, j * 32, (i + game->x) * 32, color);
-			i = game->info->player_pos_y + pixel * sin(RADIAN * counter);
-			j = game->info->player_pos_x + pixel * cos(RADIAN * counter);
-			pixel += 0.01;
+			mlx_pixel_put(game->vars->mlx, game->vars->win, j * 32, (i + game->x) * 32, color);
+			full_raycasting(game, &i, &j, from_zero_to_pi(fov1));
 		}
+		pixel = sqrt(pow(i - game->info->player_pos_y, 2) + pow(j - game->info->player_pos_x, 2));
 		draw_country(game, i, j, pixel, color, k++);
+		printf("k = %d\n", k);
 		pixel = 0;
 		i = game->info->player_pos_y;
 		j = game->info->player_pos_x;
-		counter += (double) 60 / ((game->y - 1) * 32);
+		fov1 -= PI / 3 / ((game->y - 1) * 32);
 	}
 }
 
