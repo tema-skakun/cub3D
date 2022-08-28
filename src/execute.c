@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/08/28 16:26:39 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/08/28 19:16:58 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	full_raycasting(t_game *game, double *i, double *j, double degree)
 		if	(cos(degree) > 0)
 			dx = trunc(*j + cos(degree));
 	}
-	
-
 	cx = dx;
 	cy = dy;
 
@@ -97,7 +95,7 @@ void	draw_country(t_game *game, double x, double y, double length, int color, in
 	k = length * 32;
 	// k = length * 32 * sin(ft_abs(PI - ft_abs(game->info->view - PI / 2) - degree));
 	// k = game->x * 32 / k;
-	printf("k = %f\n", k);
+	// printf("k = %f\n", k);
 	// dx = length * 32 * cos(degree);
 	// dy = length * 32 * sin(degree);
 	// k = dx * cos(from_zero_to_pi(game->info->view - degree)) + dy * sin(from_zero_to_pi(game->info->view - degree));
@@ -132,7 +130,7 @@ int	define_side(char **map, double i, double j)
 	return (1);
 }
 
-void	some_raycasting(t_game *game)
+void	some_raycasting(t_game *game)//сега когда смотришь за пределы карты
 {
 	double i = game->info->player_pos_y;
 	double j = game->info->player_pos_x;
@@ -168,7 +166,7 @@ void	some_raycasting(t_game *game)
 	}
 }
 
-void execute(t_game *game)
+void	execute(t_game *game)
 {
 	init_info(game); // Инициализация данных
 	set_map(game); // Исполнения

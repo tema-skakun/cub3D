@@ -13,24 +13,33 @@ int	close_esc(int keycode, t_game *game)
 	return (0);
 }
 
-int	move_all(t_game *game, double x, double y)
+void	move_all(t_game *game, double x, double y)
 {
-	// printf ("degree = %f\n", game->info->view);
-	// printf ("pos_x = %f\n", y * cos(from_zero_to_pi(game->info->view + PI / 6)));
-	// printf ("pos_y = %f\n", x * -sin(from_zero_to_pi(game->info->view + PI / 6)));
-	if (x == y)
+	double	move_x;
+	double	move_y;
+	double	tmp_x;
+	double	tmp_y;
+
+	tmp_x = game->info->player_pos_x;
+	tmp_y = game->info->player_pos_y;
+	if (x == y)// движение вперёд-назад (поправил рассчёт)
 	{
-		
-		game->info->player_pos_x += y * cos(from_zero_to_pi(game->info->view));
-		game->info->player_pos_y += x * -sin(from_zero_to_pi(game->info->view));
+		move_x = x * cos(from_zero_to_pi(game->info->view));
+		move_y = y * -sin(from_zero_to_pi(game->info->view));
 	}
-	else
+	else// движение влево-вправо (поправил рассчёт)
 	{
-		game->info->player_pos_x += y * cos(from_zero_to_pi(game->info->view + PI / 2));
-		game->info->player_pos_y += x * -sin(from_zero_to_pi(game->info->view - PI / 2));
+		move_x = x * -cos(from_zero_to_pi(game->info->view + PI / 2));
+		move_y = y * sin(from_zero_to_pi(game->info->view - PI / 2));
+	}
+	tmp_x += move_x;
+	tmp_y += move_y;
+	if (tmp_x >= 0 && tmp_y >= 0 && tmp_y <= game->x - 1 && tmp_x <= game->y - 1)//герой не пойдёт за пределы карты
+	{
+		game->info->player_pos_x = tmp_x;
+		game->info->player_pos_y = tmp_y;
 	}
 	set_map(game);
-	return (1);
 }
 
 int	look(t_game *game, double x)
@@ -40,7 +49,8 @@ int	look(t_game *game, double x)
 	return(1);
 }
 
-int move(int keycode, t_game *game){
+int	move(int keycode, t_game *game)
+{
 	close_esc(keycode, game);
 	if (keycode == 13) // w
 		move_all(game, 0.4, 0.4);

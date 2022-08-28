@@ -3,8 +3,8 @@ SO ./maps/textures/texture_south
 WE ./maps/textures/texture_west
 EA ./maps/textures/texture_east
 
-F 220, 10, 0
-C 150, 30, 0
+F 30, 10, 110
+C 150, 30, 50
 
 
 
