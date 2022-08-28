@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/26 20:53:18 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/28 20:16:10 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	add_path_texture(char **path, char *line, char *str, int *key)
 {
-	*path = ft_strtrim(line, str);
-	if (NULL == (*path))
-		ft_error("Error: memory was not allocated properly");
+	if (*path == NULL)
+	{
+		*path = ft_strtrim(line, str);
+		if (NULL == (*path))
+			ft_error("Error: memory was not allocated properly");
+	}
 	*key += 1;
 }
 
@@ -85,7 +88,9 @@ void	check_config_file(t_game *game)
 		i++;
 	}
 	if (key != 6 || check_textures(game))
-		ft_error("Error: invalid configuration file");
+	{
+		ft_error("Error: invalid configuration file 100");
+	}
 }
 
 void	validation_check_map(t_game *game)
