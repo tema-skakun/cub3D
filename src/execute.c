@@ -6,7 +6,7 @@
 /*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/08/27 16:59:37 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:28:45 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,26 @@ void	full_raycasting(t_game *game, double *i, double *j, double degree)
 	}
 }
 
-void	draw_country(t_game *game, double x, double y, double length, int color, int c)
+void	draw_country(t_game *game, double x, double y, double length, int color, int c, double degree)
 {
 	double		k;
 	double		up;
+	// double		dx;
+	// double		dy;
+	// int			i = 0;
 	(void)	y;
 	(void)	x;
+	(void)	degree;
 
-	k = length * 32; // длина до стены
+	k = length * 32;
+	// dx = length * 32 * cos(degree);
+	// dy = length * 32 * sin(degree);
+	// k = dx * cos(from_zero_to_pi(game->info->view - degree)) + dy * sin(from_zero_to_pi(game->info->view - degree));
 	// up = game->y * 16 + k * 32;
+	// if (k < 0)
+	// 	k = -k;
 	up = game->x * 32 - k;
+	// printf ("k = %f\n", k);
 	while (k < up)
 	{
 		mlx_pixel_put(game->vars->mlx, game->vars->win, c, k, color);
@@ -102,6 +112,23 @@ void	draw_country(t_game *game, double x, double y, double length, int color, in
 // 	return (number);
 // }
 
+int	define_side(char **map, double i, double j)
+{
+	if (i == (int) i)
+	{
+		i = i - 1;
+		j = trunc(j);
+	}
+	else if (j == (int) j)
+	{
+		j = j - 1;
+		i = trunc(i);
+	}
+	if (map[(int)i][(int)j] && map[(int)i][(int)j] == '1')
+		return (0);
+	return (1);
+}
+
 void	some_raycasting(t_game *game)
 {
 	double i = game->info->player_pos_y;
@@ -116,18 +143,21 @@ void	some_raycasting(t_game *game)
 	fov1 = game->info->view + PI / 6;
 	fov2 = game->info->view - PI / 6;
 	k = 0;
-	map = game->map;
+	map = game->square_map;
 	pixel = 0;
 	while (fov2 <= fov1)
 	{
-		while (map[(int)i][(int)j] && map[(int)i][(int)j] != '1')
+		while (map[(int)i][(int)j] && (map[(int)i][(int)j] != '1'))
 		{
-			mlx_pixel_put(game->vars->mlx, game->vars->win, j * 32, (i + game->x) * 32, color);
+			mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, color);
 			full_raycasting(game, &i, &j, from_zero_to_pi(fov1));
+			if (!define_side(map, i, j)) // доп проверка для попадание в стену
+				break;
 		}
+		mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, color);
 		pixel = sqrt(pow(i - game->info->player_pos_y, 2) + pow(j - game->info->player_pos_x, 2));
-		draw_country(game, i, j, pixel, color, k++);
-		printf("k = %d\n", k);
+		draw_country(game, i, j, pixel, color, k++, from_zero_to_pi(fov1));
+		// printf("k = %d\n", k);
 		pixel = 0;
 		i = game->info->player_pos_y;
 		j = game->info->player_pos_x;
