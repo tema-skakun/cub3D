@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/08/28 19:16:58 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/08/29 19:15:20 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,34 +81,77 @@ double	ft_abs(double number)
 	return (number);
 }
 
+double	from_big_degree_to_small(double degree)
+{
+	if (degree > PI)
+		return (2 * PI - degree);
+	// if (degree > PI)
+	// 	return (3 * PI / 2 - degree);
+	return (degree);
+}
+
 void	draw_country(t_game *game, double x, double y, double length, int color, int c, double degree)
 {
-	double		k;
-	double		up;
-	// double		dx;
-	// double		dy;
-	// int			i = 0;
+	double	k;
+	double	main_pi;
+	int		d;
+
 	(void)	y;
 	(void)	x;
 	(void)	degree;
 
-	k = length * 32;
-	// k = length * 32 * sin(ft_abs(PI - ft_abs(game->info->view - PI / 2) - degree));
-	// k = game->x * 32 / k;
-	// printf("k = %f\n", k);
-	// dx = length * 32 * cos(degree);
-	// dy = length * 32 * sin(degree);
-	// k = dx * cos(from_zero_to_pi(game->info->view - degree)) + dy * sin(from_zero_to_pi(game->info->view - degree));
-	// up = game->y * 16 + k * 32;
-	// if (k < 0)
-	// 	k = -k;
-	up = game->x * 32 - k;
-	// printf ("k = %f\n", k);
-	while (k < up)
+	if (game->info->view < PI) 
+		main_pi = PI / 2;
+	else
+		main_pi = PI;
+	if (game->info->view == 0 || game->info->view == PI || game->info->view == 2 * PI) // крайние значения
 	{
-		mlx_pixel_put(game->vars->mlx, game->vars->win, c, k, color);
-		k++;
-		// x++;
+		k = length * sin(degree);
+		if (degree > PI)
+			k = length * sin(PI - degree);
+		if (game->info->view == 0 || game->info->view == 2 * PI)
+			k = length * sin(PI / 2 - from_big_degree_to_small(degree));
+	}
+	if (game->info->view <= PI / 2) // 1 часть
+	{
+		k = length * sin(ft_abs(from_zero_to_pi(PI - degree - ft_abs(main_pi - game->info->view))));
+		if (game->info->view > degree)
+			k = length * sin(ft_abs(from_zero_to_pi(degree + ft_abs(main_pi - game->info->view))));
+	}
+	else if (game->info->view >=3 * PI / 2) // 4 часть
+	{
+		k = length * sin(ft_abs(from_zero_to_pi(PI - (degree - (game->info->view - PI + PI / 2)))));
+		if (game->info->view > degree)
+			k = length * sin(ft_abs(from_zero_to_pi(2 * PI - degree + (game->info->view - 3 * PI / 2))));
+	}
+	else if (game->info->view > PI) // 3 часть
+	{
+		k = length * sin(ft_abs(from_zero_to_pi(PI - (degree - (game->info->view - PI + PI / 2)))));
+		if (game->info->view > degree)
+			k = length * sin(ft_abs(from_zero_to_pi(degree - (game->info->view - PI + PI / 2))));
+	}
+	else if (game->info->view > PI / 2) // 2 часть
+	{
+		k = length * sin(ft_abs(from_zero_to_pi(PI - (degree - ft_abs(main_pi - game->info->view)))));
+		if (game->info->view > degree)
+			k = length * sin(ft_abs(from_zero_to_pi(degree - ft_abs(main_pi - game->info->view))));
+	}
+	k = (int) game->x * 32 / k + 1;
+	d = (int) game->x * 16 - k / 2;
+	if (d > 0)
+	{
+		while (d <= game->x * 16 + k / 2)
+		{
+			mlx_pixel_put(game->vars->mlx, game->vars->win, c, d, color);
+			d++;
+			// x++;
+		}
+	}
+	else
+	{
+		d = 0;
+		while (d <= game->x * 32)
+			mlx_pixel_put(game->vars->mlx, game->vars->win, c, d++, color);
 	}
 	// while()
 }
