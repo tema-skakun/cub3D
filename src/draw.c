@@ -71,10 +71,16 @@ static void	draw_floor_ceilling(t_game *game)
 	mlx_destroy_image(game->vars->mlx, img.ptr);
 }
 
-void	set_map(t_game *game)
+int	set_map(t_game *game)
 {
-	mlx_clear_window(game->vars->mlx, game->vars->win);
-	draw_floor_ceilling(game); // заполнение пола и неба
-	set_minimap(game);	// заполнение миникарты (временное решение. Создано для удобной отладки)
-	some_raycasting(game, game->info->player_pos_y, game->info->player_pos_x); // raycasting
+	if (game->i == 65)
+	{
+		mlx_clear_window(game->vars->mlx, game->vars->win);
+		draw_floor_ceilling(game); // заполнение пола и неба
+		set_minimap(game);	// заполнение миникарты (временное решение. Создано для удобной отладки)
+		some_raycasting(game, game->info->player_pos_y, game->info->player_pos_x); // raycasting
+		game->i = 0;
+	}
+	game->i++;
+	return (5);
 }

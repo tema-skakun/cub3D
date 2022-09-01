@@ -6,7 +6,7 @@
 /*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/30 19:06:22 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/01 15:55:44 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_game
 	char	*ea;//восточная
 	int		f[3];//цвет F
 	int		c[3];//цвет C
+	int		i;
 	// int		num_str;//считал кол-во строк в файле (сейчас малочу по дефолту 3000)
 	int		x;//кол-во строк
 	int		y;//максимальное кол-во столбцов
@@ -95,7 +96,7 @@ void	from_file_to_map(char **map, char **file, int *i, int *j);
 void	execute(t_game *game);
 void	init_info(t_game *game);
 int		argb_to_int(int a, int r, int g, int b);
-void 	set_map(t_game *game);
+int		set_map(t_game *game);
 void	some_raycasting(t_game *game, double i, double j);
 double	from_zero_to_pi(double degree);
 int		move(int keycode, t_game *game);

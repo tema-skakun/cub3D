@@ -39,14 +39,14 @@ void	move_all(t_game *game, double x, double y)
 		game->info->player_pos_x = tmp_x;
 		game->info->player_pos_y = tmp_y;
 	}
-	set_map(game);
+	// set_map(game);
 }
 
-int	look(t_game *game, double x)
+void	look(t_game *game, double x)
 {
 	game->info->view = from_zero_to_pi(game->info->view + x * RADIAN);
-	set_map(game);
-	return(1);
+	// set_map(game);
+	// return(1);
 }
 
 int	move(int keycode, t_game *game)
