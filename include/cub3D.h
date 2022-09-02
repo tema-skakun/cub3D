@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/01 15:55:44 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:08:37 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,14 @@ void	execute(t_game *game);
 void	init_info(t_game *game);
 int		argb_to_int(int a, int r, int g, int b);
 int		set_map(t_game *game);
-void	some_raycasting(t_game *game, double i, double j);
+void	some_raycasting(t_game *game, double i, double j, t_img img);
 double	from_zero_to_pi(double degree);
 int		move(int keycode, t_game *game);
 void	full_raycasting(double *i, double *j, double degree);
 int		check_hit_wall(char **map, double i, double j);
 double	ft_abs(double number);
 double	set_camera_degree(double degree, int *sign);
+void	my_mlx_pixel_put(t_img texture, int x, int y, int color);
 
 //del;
 void	print_game(t_game *game);

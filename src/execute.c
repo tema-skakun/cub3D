@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/09/01 19:49:30 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:58:15 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3D.h"
 
-void	draw_country(t_game *game, double length, int c, double degree)
+void	my_mlx_pixel_put(t_img texture, int x, int y, int color)
+{
+	char	*dst = NULL;
+
+	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)// Колина проверка, она от чего то защищает
+		return ;
+	dst = texture.addr + (y * texture.size_line + x * (texture.bits_per_pixel / 8));
+	if (color != 0)// костыль для работы set_textures
+		*(unsigned int *)dst = color;
+}
+
+void	draw_country(t_game *game, double length, int c, double degree, t_img img)
 {
 	double	k;
 	double	camera_degree;
@@ -26,49 +37,37 @@ void	draw_country(t_game *game, double length, int c, double degree)
 	d = (int) ceil(game->x * 16 - k / 2);
 	sign = game->x * 16 + k / 2;
 	if (d < 0)
-		d = 0;
+		d = -1;
 	if (sign >= game->x * 32)
 		sign = game->x * 32 - 1;
-	while (d <= sign)
-		mlx_pixel_put(game->vars->mlx, game->vars->win, c, d++, argb_to_int(0, 20, 255, 20));
+	while (d < sign)
+		my_mlx_pixel_put(img, c, ++d, argb_to_int(0, 20, 255, 20));//есть мнение, что ++d работает быстрее чем d++
+		// mlx_pixel_put(game->vars->mlx, game->vars->win, c, d++, argb_to_int(0, 20, 255, 20));
 }
 
 void	set_textures(t_game *game)
 {
 	t_img	texture;
-	// t_img	texture2;
-	unsigned int	*tmp;
 	int		width;
 	void	*no;
 	int		height;
 	int	i = 0;
 	int	j;
-	int pos;
-	// int	x = 1 * texture.size_line) + (1 * (texture.bits_per_pixel / 8;
 
 	no = mlx_xpm_file_to_image(game->vars->mlx, game->no, &width, &height);
 	texture.addr = mlx_get_data_addr(no, &texture.bits_per_pixel, &texture.size_line, &texture.endian);
-	pos = (0 * texture.size_line + 0 * (texture.bits_per_pixel / 8));
-	tmp = (unsigned int	*)texture.addr;
-	printf ("width = %d  height = %d  pos = %d size_lin = %d  pos = '%d' pos = '%d'  bpp = %d\n", width, height, pos, texture.size_line, tmp[pos], tmp[pos], texture.bits_per_pixel);
-	while (i < 128)
+	while (i < height)
 	{
-		j = 0;
-		while (j < 128)
-		{
-			mlx_pixel_put(game->vars->mlx, game->vars->win, j + 50 , i + 50, (int) tmp[i * texture.size_line / 4 + j]);
-			// mlx_put_image_to_window(game->vars->mlx, game->vars->win, tmp, 0, 0);
-			j++;
-		}
-		// x++;
+		j = -1;
+		while (++j < width)
+			my_mlx_pixel_put(texture, j, i, 0);
 		i++;
 	}
-	// mlx_put_image_to_window(game->vars->mlx, game->vars->win, no, 0, 0);
 	// mlx_destroy_image(game->vars->mlx, no);
-	
+	mlx_put_image_to_window(game->vars->mlx, game->vars->win, no, 150, 150);
 }
 
-void	some_raycasting(t_game *game, double i, double j)//сега когда смотришь за пределы карты
+void	some_raycasting(t_game *game, double i, double j, t_img img)//сега когда смотришь за пределы карты
 {
 	char	**map;
 	double	pixel;
@@ -85,14 +84,16 @@ void	some_raycasting(t_game *game, double i, double j)//сега когда см
 		pixel = 0;
 		while (map[(int)i][(int)j] && (map[(int)i][(int)j] != '1'))
 		{
-			mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, argb_to_int(0, 20, 255, 20));
+			my_mlx_pixel_put(img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
+			// mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, argb_to_int(0, 20, 255, 20));
 			full_raycasting(&i, &j, from_zero_to_pi(fov1));
 			if (!check_hit_wall(map, i, j)) // доп проверка для попадание в стену
 				break ;
 		}
-		mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, argb_to_int(0, 20, 255, 20));
+		my_mlx_pixel_put(img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
+		// mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, argb_to_int(0, 20, 255, 20));
 		pixel = sqrt(pow(i - game->info->player_pos_y, 2) + pow(j - game->info->player_pos_x, 2));
-		draw_country(game, pixel, counter++, from_zero_to_pi(fov1));
+		draw_country(game, pixel, counter++, from_zero_to_pi(fov1), img);
 		fov1 -= PI / 3 / ((game->y - 1) * 32);
 	}
 }
