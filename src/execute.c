@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/09/02 16:58:15 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/02 20:12:08 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	my_mlx_pixel_put(t_img texture, int x, int y, int color)
 {
-	char	*dst = NULL;
+	char	*dst;
 
 	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)// Колина проверка, она от чего то защищает
 		return ;
@@ -70,7 +70,7 @@ void	set_textures(t_game *game)
 void	some_raycasting(t_game *game, double i, double j, t_img img)//сега когда смотришь за пределы карты
 {
 	char	**map;
-	double	pixel;
+	double	length;
 	int		counter;
 	double	fov1;
 
@@ -81,7 +81,7 @@ void	some_raycasting(t_game *game, double i, double j, t_img img)//сега ко
 	{
 		i = game->info->player_pos_y;
 		j = game->info->player_pos_x;
-		pixel = 0;
+		length = 0;
 		while (map[(int)i][(int)j] && (map[(int)i][(int)j] != '1'))
 		{
 			my_mlx_pixel_put(img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
@@ -92,8 +92,8 @@ void	some_raycasting(t_game *game, double i, double j, t_img img)//сега ко
 		}
 		my_mlx_pixel_put(img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
 		// mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, argb_to_int(0, 20, 255, 20));
-		pixel = sqrt(pow(i - game->info->player_pos_y, 2) + pow(j - game->info->player_pos_x, 2));
-		draw_country(game, pixel, counter++, from_zero_to_pi(fov1), img);
+		length = sqrt(pow(i - game->info->player_pos_y, 2) + pow(j - game->info->player_pos_x, 2));
+		draw_country(game, length, counter++, from_zero_to_pi(fov1), img);
 		fov1 -= PI / 3 / ((game->y - 1) * 32);
 	}
 }
@@ -104,6 +104,7 @@ void	execute(t_game *game)
 	// set_textures(game);
 	set_map(game); // Исполнения
 	mlx_hook(game->vars->win, 2, 0, &move, game);
+	mlx_hook(game->vars->win, 17, 0, &red_cross, game);//выход красным крестиком
 	mlx_loop_hook(game->vars->mlx, &set_map, game);
     mlx_loop(game->vars->mlx);
 }

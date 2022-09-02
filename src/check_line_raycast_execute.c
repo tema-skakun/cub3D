@@ -5,18 +5,18 @@ static void	check_horizontal_line(double *points, double i, double j, double deg
 	if (degree > 0 && degree < PI)
 	{
 		points[1] = ceil(i - 1);
-		points[0] = j + (i - points[1]) * 1/tan(degree);
+		points[0] = j + (i - points[1]) * 1 / tan(degree);
 	}
 	else if (degree > PI)
 	{
 		points[1] = trunc(i + 1);
-		points[0] = j - (points[1] - i) * 1/tan(degree);
+		points[0] = j - (points[1] - i) * 1 / tan(degree);
 	}
 	else
 	{
 		points[1] = i;
 		points[0] = ceil(j + cos(degree));
-		if	(cos(degree) > 0)
+		if (cos(degree) > 0)
 			points[0] = trunc(j + cos(degree));
 	}
 }

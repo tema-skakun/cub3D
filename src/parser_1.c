@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/28 20:16:10 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:57:20 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ void	validation_check_map(t_game *game)
 		i++;
 	}
 	if (hero != 1)
-		ft_error("Error: too many heroes");
+		ft_error("Error: the map contains an invalid character(s)");
 	squaring_map(game);
 }
