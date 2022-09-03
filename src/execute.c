@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/09/02 20:12:08 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/03 20:45:52 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	my_mlx_pixel_put(t_img texture, int x, int y, int color)
 		*(unsigned int *)dst = color;
 }
 
-void	draw_country(t_game *game, double length, int c, double degree, t_img img)
+void	draw_country(t_game *game, double length, int c, double degree)
 {
 	double	k;
 	double	camera_degree;
@@ -40,8 +40,14 @@ void	draw_country(t_game *game, double length, int c, double degree, t_img img)
 		d = -1;
 	if (sign >= game->x * 32)
 		sign = game->x * 32 - 1;
-	while (d < sign)
-		my_mlx_pixel_put(img, c, ++d, argb_to_int(0, 20, 255, 20));//есть мнение, что ++d работает быстрее чем d++
+	while (++d < sign)//есть мнение, что ++d работает быстрее чем d++
+	{
+		// color_selection(game, c, d);//эта функция должна проверить dx и dy
+		// если dx > 0; dy < 0; линия пересечения со стеной - горизонтальная -> стена южная (цвет - красный)
+		// если dx > 0; dy < 0; линия пересечения со стеной - вертикальная -> стена западная (цвет - зелёный)
+		// и т.д.
+		my_mlx_pixel_put(game->img, c, d, argb_to_int(0, 20, 200, 20));
+	}
 		// mlx_pixel_put(game->vars->mlx, game->vars->win, c, d++, argb_to_int(0, 20, 255, 20));
 }
 
@@ -67,7 +73,7 @@ void	set_textures(t_game *game)
 	mlx_put_image_to_window(game->vars->mlx, game->vars->win, no, 150, 150);
 }
 
-void	some_raycasting(t_game *game, double i, double j, t_img img)//сега когда смотришь за пределы карты
+void	some_raycasting(t_game *game, double i, double j)//сега когда смотришь за пределы карты
 {
 	char	**map;
 	double	length;
@@ -84,16 +90,16 @@ void	some_raycasting(t_game *game, double i, double j, t_img img)//сега ко
 		length = 0;
 		while (map[(int)i][(int)j] && (map[(int)i][(int)j] != '1'))
 		{
-			my_mlx_pixel_put(img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
+			my_mlx_pixel_put(game->img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
 			// mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, argb_to_int(0, 20, 255, 20));
 			full_raycasting(&i, &j, from_zero_to_pi(fov1));
 			if (!check_hit_wall(map, i, j)) // доп проверка для попадание в стену
 				break ;
 		}
-		my_mlx_pixel_put(img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
+		my_mlx_pixel_put(game->img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
 		// mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, argb_to_int(0, 20, 255, 20));
 		length = sqrt(pow(i - game->info->player_pos_y, 2) + pow(j - game->info->player_pos_x, 2));
-		draw_country(game, length, counter++, from_zero_to_pi(fov1), img);
+		draw_country(game, length, counter++, from_zero_to_pi(fov1));
 		fov1 -= PI / 3 / ((game->y - 1) * 32);
 	}
 }

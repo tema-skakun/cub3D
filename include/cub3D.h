@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/02 19:26:43 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/03 18:34:05 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_game
 	char	**square_map;//квадратная карта
 	t_vars	*vars;
 	t_info	*info;
+	t_img	img;
 }				t_game;
 
 // parser;
@@ -97,7 +98,7 @@ void	execute(t_game *game);
 void	init_info(t_game *game);
 int		argb_to_int(int a, int r, int g, int b);
 int		set_map(t_game *game);
-void	some_raycasting(t_game *game, double i, double j, t_img img);
+void	some_raycasting(t_game *game, double i, double j);
 double	from_zero_to_pi(double degree);
 int		move(int keycode, t_game *game);
 int		red_cross(int keycode, t_game *game);
