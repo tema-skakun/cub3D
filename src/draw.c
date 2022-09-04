@@ -1,10 +1,6 @@
 #include "cub3D.h"
 
-int argb_to_int(int a, int r, int g, int b){
-	return (a << 24 | r << 16 | g << 8 | b);
-}
-
-void	my_mlx_pixel_put_2(t_img texture, int x, int y, int color)
+void	my_pixel_put(t_img texture, int x, int y, int color)
 {
 	char	*dst;
 
@@ -15,19 +11,22 @@ void	my_mlx_pixel_put_2(t_img texture, int x, int y, int color)
 		*(unsigned int *)dst = color;
 }
 
-static void	set_pixel_minimap(t_img img, int j, int i, int color, int *mnogitel)
+int argb_to_int(int a, int r, int g, int b){
+	return (a << 24 | r << 16 | g << 8 | b);
+}
+
+static void	set_pixel_minimap(t_img img, int j, int i, int color, int *multiplier)
 {
 	int	a;//строки
 	int	b;//столбцы
-	// unsigned int	*dst;
 
 	a = 0;
-	while (a < 4)
+	while (a <= scale_mini_map)
 	{
 		b = 0;
-		while (b < 4)
+		while (b <= scale_mini_map)
 		{
-			my_mlx_pixel_put(img, j + mnogitel[1] + b, i + a + mnogitel[0], color);
+			my_pixel_put(img, j + multiplier[1] + b, i + a + multiplier[0], color);
 			b++;
 		}
 		a++;
@@ -50,52 +49,50 @@ static void	set_pixel_minimap(t_img img, int j, int i, int color, int *mnogitel)
 // 	mlx_destroy_image(game->vars->mlx, img.ptr);
 // }
 
-static void	set_minimap(t_game *game)
+void	set_minimap(t_game *game)
 {
 	char	**map;
 	int		color;
 	int		j;
 	int		i;
-	int		mnogitel[2];
+	int		multiplier[2];
 
 	i = 0;
 	map = game->square_map;
-	mnogitel[0] = 0;
+	multiplier[0] = 0;
 	while (map[i])
 	{
 		j = 0;
-		mnogitel[1] = 0;
+		multiplier[1] = 0;
 		while (map[i][j] && map[i][j] != '\n')
 		{
-			color = argb_to_int(0, 0, 0, 100);//цвет пола 
+			color = argb_to_int(0, 0, 0, 250);//цвет пола 
 			if (map[i][j] == '1')
 				color = argb_to_int(0, 200, 0, 0);//цвет стен
 			else if (map[i][j] == '8')
-				color = argb_to_int(0, 0, 100, 0);//цвет пустоты
-			set_pixel_minimap(game->img, j + 20, i + 20, color, mnogitel);
-			mnogitel[1] += 2;
+				color = argb_to_int(0, 0, 200, 0);//цвет пустоты
+			set_pixel_minimap(game->img, j + 20, i + 20, color, multiplier);
+			multiplier[1] += scale_mini_map;
 			j++;
 		}
-		mnogitel[0] += 2;
+		multiplier[0] += scale_mini_map;
 		i++;
 	}
 }
 
 static void	draw_all(t_game *game)
 {
-	// t_img			img;
 	int				i;
+	// int				j;
 	int				color;
 	unsigned int	*tmp;
 
-	// img.ptr = mlx_new_image(game->vars->mlx, game->y * 32, game->x * 32);
-	// img.addr = mlx_get_data_addr(img.ptr, &img.bits_per_pixel, &img.size_line, &img.endian);
-	mlx_clear_window(game->vars->mlx, game->vars->win);//или вызывать тут, а можно вообще не вызывать - ликов не будет
 	tmp = (unsigned int *)game->img.addr;
 	color = argb_to_int(0, game->c[0], game->c[1], game->c[2]);//потолок - ceilling
 	i = game->x * 32 / 8 * game->img.size_line;
 	while (--i)
 		*tmp++ = color;
+		// my_pixel_put(game->img, j, i, color);
 	color = argb_to_int(0, game->f[0], game->f[1], game->f[2]);//пол - floor
 	i = game->x * 32 / 8 * game->img.size_line;
 	while (--i)
@@ -110,9 +107,9 @@ int	set_map(t_game *game)
 	game->img.ptr = mlx_new_image(game->vars->mlx, game->y * 32, game->x * 32);
 	game->img.addr = mlx_get_data_addr(game->img.ptr, &game->img.bits_per_pixel, \
 										&game->img.size_line, &game->img.endian);
-	// mlx_clear_window(game->vars->mlx, game->vars->win);//можно вызывать тут
+	mlx_clear_window(game->vars->mlx, game->vars->win);//можно вообще не вызывать - ликов не будет
 	draw_all(game);//заполнение пола, неба и стен
-	set_minimap(game);//заполнение миникарты (временное решение. Создано для удобной отладки)
+	// set_minimap(game);//заполнение миникарты (временное решение. Создано для удобной отладки)
 	mlx_put_image_to_window(game->vars->mlx, game->vars->win, game->img.ptr, 0, 0);//помещаю итоговое img в окно
 	mlx_destroy_image(game->vars->mlx, game->img.ptr);//разрушаю img, что бы не кушать много физической памяти
 	// game->i = 0;

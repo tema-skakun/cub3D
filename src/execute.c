@@ -6,21 +6,20 @@
 /*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/09/03 20:45:52 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/09/04 14:23:42 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3D.h"
 
-void	my_mlx_pixel_put(t_img texture, int x, int y, int color)
+void	wall_facing(double dy, double dx, t_game *game)
 {
-	char	*dst;
-
-	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)// Колина проверка, она от чего то защищает
-		return ;
-	dst = texture.addr + (y * texture.size_line + x * (texture.bits_per_pixel / 8));
-	if (color != 0)// костыль для работы set_textures
-		*(unsigned int *)dst = color;
+	(void)dy;
+	(void)dx;
+	(void)game;
+	game->info->color_wall = 0;
+	if (dy >= 0 && dx >= 0 && game->info->wall == 1)//ЮВ стенки
+		game->info->color_wall = argb_to_int(0, 20, 20, 255);
 }
 
 void	draw_country(t_game *game, double length, int c, double degree)
@@ -42,13 +41,11 @@ void	draw_country(t_game *game, double length, int c, double degree)
 		sign = game->x * 32 - 1;
 	while (++d < sign)//есть мнение, что ++d работает быстрее чем d++
 	{
-		// color_selection(game, c, d);//эта функция должна проверить dx и dy
-		// если dx > 0; dy < 0; линия пересечения со стеной - горизонтальная -> стена южная (цвет - красный)
-		// если dx > 0; dy < 0; линия пересечения со стеной - вертикальная -> стена западная (цвет - зелёный)
-		// и т.д.
-		my_mlx_pixel_put(game->img, c, d, argb_to_int(0, 20, 200, 20));
+		if (game->info->color_wall && game->info->wall == 1)
+			my_pixel_put(game->img, c, d, game->info->color_wall);
+		else
+			my_pixel_put(game->img, c, d, argb_to_int(0, 20, 200, 20));
 	}
-		// mlx_pixel_put(game->vars->mlx, game->vars->win, c, d++, argb_to_int(0, 20, 255, 20));
 }
 
 void	set_textures(t_game *game)
@@ -66,7 +63,7 @@ void	set_textures(t_game *game)
 	{
 		j = -1;
 		while (++j < width)
-			my_mlx_pixel_put(texture, j, i, 0);
+			my_pixel_put(texture, j, i, 0);
 		i++;
 	}
 	// mlx_destroy_image(game->vars->mlx, no);
@@ -78,29 +75,30 @@ void	some_raycasting(t_game *game, double i, double j)//сега когда см
 	char	**map;
 	double	length;
 	int		counter;
-	double	fov1;
+	double	fov;
 
-	fov1 = game->info->view + PI / 6;
+	fov = game->info->view + PI / 6;
 	counter = 0;
 	map = game->square_map;
-	while (fov1 >= game->info->view - PI / 6)
+	set_minimap(game);//отрисовка миникарты и поля зрения должны выполняться после отрисовки стен
+	while (fov >= game->info->view - PI / 6)
 	{
-		i = game->info->player_pos_y;
+		i = game->info->player_pos_y;//задали координаты камере или что это
 		j = game->info->player_pos_x;
-		length = 0;
+		// length = 0;
 		while (map[(int)i][(int)j] && (map[(int)i][(int)j] != '1'))
 		{
-			my_mlx_pixel_put(game->img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
-			// mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, argb_to_int(0, 20, 255, 20));
-			full_raycasting(&i, &j, from_zero_to_pi(fov1));
+			my_pixel_put(game->img, (int)j + 20, (int)(i + game->x) + 20, argb_to_int(0, 20, 255, 20));
+			full_raycasting(&i, &j, from_zero_to_pi(fov), game);
 			if (!check_hit_wall(map, i, j)) // доп проверка для попадание в стену
 				break ;
 		}
-		my_mlx_pixel_put(game->img, (int)j, (int)(i + game->x), argb_to_int(0, 20, 255, 20));
-		// mlx_pixel_put(game->vars->mlx, game->vars->win, (int)j * 32, (int)(i + game->x) * 32, argb_to_int(0, 20, 255, 20));
+		my_pixel_put(game->img, (int)j + 20, (int)(i + game->x) + 20, argb_to_int(0, 20, 255, 20));
 		length = sqrt(pow(i - game->info->player_pos_y, 2) + pow(j - game->info->player_pos_x, 2));
-		draw_country(game, length, counter++, from_zero_to_pi(fov1));
-		fov1 -= PI / 3 / ((game->y - 1) * 32);
+		// printf("dy = %f, dx = %f\n", i - game->info->player_pos_y, j - game->info->player_pos_x);
+		wall_facing(i - game->info->player_pos_y, j - game->info->player_pos_x, game);//выбор стены (dy, dx, h/v) (1 or 2)
+		draw_country(game, length, counter++, from_zero_to_pi(fov));//добавить цвет
+		fov -= PI / 3 / ((game->y - 1) * 32);
 	}
 }
 

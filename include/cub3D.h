@@ -6,7 +6,7 @@
 /*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/03 18:34:05 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/09/04 14:07:14 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define HEIGHT 1080
 # define RADIAN 0.0174533
 # define PI		3.1415926
+# define scale_mini_map 4
 
 typedef struct s_vars
 {
@@ -36,9 +37,11 @@ typedef struct s_vars
 // execute need some parametres
 typedef struct s_info
 {
-	double player_pos_x;
-	double player_pos_y;
-	double view;
+	double	player_pos_x;
+	double	player_pos_y;
+	double	view;
+	int		wall;//1 - горизонтальная; 2 - вертикальная
+	int		color_wall;
 	// 4 void*;
 }	t_info;
 
@@ -98,15 +101,16 @@ void	execute(t_game *game);
 void	init_info(t_game *game);
 int		argb_to_int(int a, int r, int g, int b);
 int		set_map(t_game *game);
+void	set_minimap(t_game *game);
 void	some_raycasting(t_game *game, double i, double j);
 double	from_zero_to_pi(double degree);
 int		move(int keycode, t_game *game);
 int		red_cross(int keycode, t_game *game);
-void	full_raycasting(double *i, double *j, double degree);
+void	full_raycasting(double *i, double *j, double degree, t_game *game);
 int		check_hit_wall(char **map, double i, double j);
 double	ft_abs(double number);
 double	set_camera_degree(double degree, int *sign);
-void	my_mlx_pixel_put(t_img texture, int x, int y, int color);
+void	my_pixel_put(t_img texture, int x, int y, int color);
 
 //del;
 void	print_game(t_game *game);
