@@ -11,7 +11,8 @@ void	my_pixel_put(t_img texture, int x, int y, int color)
 		*(unsigned int *)dst = color;
 }
 
-int argb_to_int(int a, int r, int g, int b){
+int argb_to_int(int a, int r, int g, int b)
+{
 	return (a << 24 | r << 16 | g << 8 | b);
 }
 
@@ -80,7 +81,7 @@ void	set_minimap(t_game *game)
 	}
 }
 
-static void	draw_all(t_game *game)
+void	draw_all(t_game *game)
 {
 	int				i;
 	// int				j;
@@ -98,22 +99,4 @@ static void	draw_all(t_game *game)
 	while (--i)
 		*tmp++ = color;
 	some_raycasting(game, game->info->player_pos_y, game->info->player_pos_x);//raycasting - отрисовка стен происходит в той же img, где нарисован пол и потолок
-}
-
-int	set_map(t_game *game)
-{
-	// if (game->i == 65)//зачем это замедление?
-	// {
-	game->img.ptr = mlx_new_image(game->vars->mlx, game->y * 32, game->x * 32);
-	game->img.addr = mlx_get_data_addr(game->img.ptr, &game->img.bits_per_pixel, \
-										&game->img.size_line, &game->img.endian);
-	mlx_clear_window(game->vars->mlx, game->vars->win);//можно вообще не вызывать - ликов не будет
-	draw_all(game);//заполнение пола, неба и стен
-	// set_minimap(game);//заполнение миникарты (временное решение. Создано для удобной отладки)
-	mlx_put_image_to_window(game->vars->mlx, game->vars->win, game->img.ptr, 0, 0);//помещаю итоговое img в окно
-	mlx_destroy_image(game->vars->mlx, game->img.ptr);//разрушаю img, что бы не кушать много физической памяти
-	// game->i = 0;
-	// }
-	// game->i++;
-	return (0);
 }

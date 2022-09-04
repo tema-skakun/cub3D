@@ -6,7 +6,7 @@
 /*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/04 14:07:14 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/09/04 20:20:07 by ulagrezina       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	from_file_to_map(char **map, char **file, int *i, int *j);
 void	execute(t_game *game);
 void	init_info(t_game *game);
 int		argb_to_int(int a, int r, int g, int b);
+void	draw_all(t_game *game);
 int		set_map(t_game *game);
 void	set_minimap(t_game *game);
 void	some_raycasting(t_game *game, double i, double j);

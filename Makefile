@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+         #
+#    By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/09/01 19:26:53 by mmeredit         ###   ########.fr        #
+#    Updated: 2022/09/04 20:19:04 by ulagrezina       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCS_DIR	= 	include
 SRCS_F		= 	main.c	parser_0.c		error.c		get_next_line.c \
 				get_next_line_utils.c	cleaner.c execute.c \
 				parser_1.c	parser_2.c	parser_3.c	print_utils.c	\
-				draw.c	init_execute_info.c	button_execute.c	check_line_raycast_execute.c	\
+				draw_0.c	draw_1.c	init_execute_info.c	button_execute.c	check_line_raycast_execute.c	\
 				utils_execute.c
 
 SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_F))
