@@ -13,24 +13,23 @@ void	wall_facing(double dy, double dx, t_game *game)
 		game->info->color_wall = argb_to_int(0, 200, 200, 25);//желтый
 }
 
-void	draw_country(t_game *game, double length, int c, double degree)
+void	draw_country(t_game *game, double length, int c, double angle)
 {
 	float	k;
 	double	camera_degree;
 	int		d;
 	int		sign;
 
-	(void)	degree;
+	// (void)angle;
 	sign = -1;
 	camera_degree = set_camera_degree(game->info->view, &sign);
 	
 	// k = length * ft_abs(sin(degree + sign * ft_abs(camera_degree - game->info->view)));
-	k = (float) length * fabs(cos(degree - game->info->view));
-	
-	k = fabs(1.0f / (k) * (((float)HEIGHT / (float)tan(30 * RADIAN))));
-	// k = (float) ceil((float)HEIGHT / k);
+	k = (float) length * fabs(cos(angle - game->info->view));
+	k = fabs(1.0f / (k) * (((float)HEIGHT / (float)tan(30 * RADIAN))));// изменил HEIGHT на WIDTH / 2
+	// k = (float) ceil((float) / k);
 	// printf ("k = %f\n", k);
-	d = ceil((float)HEIGHT / 2.0f - k / 2.0f) - 1;
+	d = ceil((float)HEIGHT / 2.0f - k / 2.0f) - 1;// что это?
 	sign = HEIGHT / 2.0f + k / 2.0f;
 	if (d < 0)
 		d = -1;
@@ -67,34 +66,34 @@ void	set_textures(t_game *game)
 	mlx_put_image_to_window(game->vars->mlx, game->vars->win, no, 150, 150);
 }
 
-void	some_raycasting(t_game *game, double i, double j)//сега когда смотришь за пределы карты
+void	some_raycasting(t_game *game, double ppy, double ppx)//сега когда смотришь за пределы карты
 {
 	char	**map;
-	double	length;
-	int		counter;
-	float	fov;
+	double	length;// расстояние до стены
+	int		counter;// счётчик столбцов
+	float	angle;// угол каждого луча
 
-	fov = (float)game->info->view + (float) PI / 6;
-	counter = 0;
+	angle = (float)game->info->view + (float) PI / 6;//по углу мы идем справой стороны
+	counter = 0;//по экрану идём слевой стороны
 	map = game->square_map;
-	while (counter < WIDTH)
+	while (counter < WIDTH)//
 	{
-		i = game->info->player_pos_y;//задали координаты камере или что это
-		j = game->info->player_pos_x;
+		ppy = game->info->player_pos_y;//задали координаты камере
+		ppx = game->info->player_pos_x;
 		// length = 0;
-		while (map[(int)i][(int)j] && (map[(int)i][(int)j] != '1'))
+		while (map[(int)ppy][(int)ppx] && (map[(int)ppy][(int)ppx] != '1'))
 		{
-			my_pixel_put(game->img, (int)j + 20, (int)(i + game->x) + 20, argb_to_int(0, 20, 255, 20));//рисует поле зрения героя
-			full_raycasting(&i, &j, from_zero_to_pi(fov), game);
-			if (!check_hit_wall(map, i, j)) // доп проверка для попадание в стену
+			my_pixel_put(game->img, (int)ppx + 20, (int)(ppy + game->x) + 20, argb_to_int(0, 20, 255, 20));//рисует поле зрения героя на миникарте
+			full_raycasting(&ppy, &ppx, from_zero_to_2pi(angle), game);
+			if (!check_hit_wall(map, ppy, ppx)) // доп проверка для попадание в стену
 				break ;
 		}
-		my_pixel_put(game->img, (int)j + 20, (int)(i + game->x) + 20, argb_to_int(0, 20, 255, 20));//рисует поле зрения героя
-		length = sqrt(pow((float)i - (float)game->info->player_pos_y, 2) + pow((float)j - (float)game->info->player_pos_x, 2));
+		my_pixel_put(game->img, (int)ppx + 20, (int)(ppy + game->x) + 20, argb_to_int(0, 20, 255, 20));//рисует поле зрения героя на миникарте
+		length = (float)sqrt(pow((float)ppy - (float)game->info->player_pos_y, 2) + pow((float)ppx - (float)game->info->player_pos_x, 2));//
 		// printf("dy = %f, dx = %f\n", i - game->info->player_pos_y, j - game->info->player_pos_x);
-		wall_facing(i - game->info->player_pos_y, j - game->info->player_pos_x, game);//выбор цвета стены (dy, dx, h/v)
-		draw_country(game, length, counter++, fov);//цвет есть в game->info
-		fov -= PI / 3 / (WIDTH);
+		wall_facing(ppy - game->info->player_pos_y, ppx - game->info->player_pos_x, game);//выбор цвета стены (dy, dx, h/v)
+		draw_country(game, length, counter++, angle);//цвет есть в game->info
+		angle -= PI / 3 / (WIDTH);
 	}
 	set_minimap(game);//отрисовка миникарты и поля зрения должны выполняться после отрисовки стен
 }

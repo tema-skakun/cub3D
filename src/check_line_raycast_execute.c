@@ -1,66 +1,66 @@
 # include "cub3D.h"
 
-static void	check_horizontal_line(double *points, double i, double j, double degree)
+static void	check_horizontal_line(double *points, double ppy, double ppx, double angle)//i = ppy; j = ppx
 {
-	if (degree > 0 && degree < PI)
+	if (angle > 0 && angle < PI)
 	{
-		points[1] = ceil(i - 1);
-		points[0] = j + (i - points[1]) * 1 / tan(degree);
+		points[1] = ceil(ppy - 1);
+		points[0] = ppx + (ppy - points[1]) * 1 / tan(angle);
 	}
-	else if (degree > PI)
+	else if (angle > PI)
 	{
-		points[1] = trunc(i + 1);
-		points[0] = j - (points[1] - i) * 1 / tan(degree);
+		points[1] = trunc(ppy + 1);
+		points[0] = ppx - (points[1] - ppy) * 1 / tan(angle);
 	}
 	else
 	{
-		points[1] = i;
-		points[0] = ceil(j + cos(degree));
-		if (cos(degree) > 0)
-			points[0] = trunc(j + cos(degree));
+		points[1] = ppy;
+		points[0] = ceil(ppx + cos(angle));
+		if (cos(angle) > 0)
+			points[0] = trunc(ppx + cos(angle));
 	}
 }
 
-static void	check_vertical_line(double *points, double i, double j, double degree)
+static void	check_vertical_line(double *points, double i, double j, double angle)
 {
-	if (degree < PI / 2 || degree > 3 * PI / 2)
+	if (angle < PI / 2 || angle > 3 * PI / 2)
 	{
 		points[2] = trunc(j + 1);
-		points[3] = i - (points[2] - j) * tan(degree);
+		points[3] = i - (points[2] - j) * tan(angle);
 	}
-	else if (degree > PI / 2 || degree < 3 * PI / 2)
+	else if (angle > PI / 2 || angle < 3 * PI / 2)
 	{
 		points[2] = ceil(j - 1);
-		points[3] = i + (j - points[2]) * tan(degree);
+		points[3] = i + (j - points[2]) * tan(angle);
 	}
 	else
 	{
 		points[2] = j;
-		points[3] = trunc(i - sin(degree));
-		if (sin(degree) > 0)
-			points[3] = ceil(i - sin(degree));
+		points[3] = trunc(i - sin(angle));
+		if (sin(angle) > 0)
+			points[3] = ceil(i - sin(angle));
 	}
 }
 
-void	full_raycasting(double *i, double *j, double degree, t_game *game)
+void	full_raycasting(double *ppy, double *ppx, double angle, t_game *game)
 {
 	double	points[4];
 	double	delta;
 
 	game->info->wall = 0;
-	check_horizontal_line(points, *i, *j, degree);//поиск пересечения с сеткой
-	check_vertical_line(points, *i, *j, degree);//поиск пересечения с сеткой
-	delta = sqrt(pow(points[0] - *j, 2) + pow(points[1] - *i, 2));//расстояние до сетки
-	if (delta < sqrt(pow(points[2] - *j, 2) + pow(points[3] - *i, 2)))
+	check_horizontal_line(points, *ppy, *ppx, angle);//поиск пересечения с сеткой
+	check_vertical_line(points, *ppy, *ppx, angle);//поиск пересечения с сеткой
+	delta = sqrt(pow(points[0] - *ppx, 2) + pow(points[1] - *ppy, 2));//расстояние до сетки
+	if (delta < sqrt(pow(points[2] - *ppx, 2) + pow(points[3] - *ppy, 2)))
 	{
-		*i = points[1];
-		*j = points[0];
+		*ppy = points[1];
+		*ppx = points[0];
 		game->info->wall = 1;//горизонтальная линия
 	}
 	else
 	{
-		*i = points[3];
-		*j = points[2];
+		*ppy = points[3];
+		*ppx = points[2];
 		game->info->wall = 2;//вертикальная линия
 	}
 }

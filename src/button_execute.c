@@ -11,13 +11,13 @@ void	move_all(t_game *game, double x, double y)
 	tmp_y = game->info->player_pos_y;
 	if (x == y)// движение вперёд-назад (поправил рассчёт)
 	{
-		move_x = x * cos(from_zero_to_pi(game->info->view));
-		move_y = y * -sin(from_zero_to_pi(game->info->view));
+		move_x = x * cos(from_zero_to_2pi(game->info->view));
+		move_y = y * -sin(from_zero_to_2pi(game->info->view));
 	}
 	else// движение влево-вправо (поправил рассчёт)
 	{
-		move_x = x * -cos(from_zero_to_pi(game->info->view + PI / 2));
-		move_y = y * sin(from_zero_to_pi(game->info->view - PI / 2));
+		move_x = x * -cos(from_zero_to_2pi(game->info->view + PI / 2));
+		move_y = y * sin(from_zero_to_2pi(game->info->view - PI / 2));
 	}
 	tmp_x += move_x;
 	tmp_y += move_y;
@@ -31,7 +31,7 @@ void	move_all(t_game *game, double x, double y)
 
 void	look(t_game *game, double x)
 {
-	game->info->view = from_zero_to_pi(game->info->view + x * RADIAN);
+	game->info->view = from_zero_to_2pi(game->info->view + x * RADIAN);
 	// set_map(game);
 	// return(1);
 }

@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-float	from_zero_to_pi(float degree)
+float	from_zero_to_2pi(float degree)
 {
 	if (degree < 0)
 		degree += 2 * PI;
