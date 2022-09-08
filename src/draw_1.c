@@ -94,7 +94,7 @@ void	some_raycasting(t_game *game, double i, double j)//сега когда см
 		// printf("dy = %f, dx = %f\n", i - game->info->player_pos_y, j - game->info->player_pos_x);
 		wall_facing(i - game->info->player_pos_y, j - game->info->player_pos_x, game);//выбор цвета стены (dy, dx, h/v)
 		draw_country(game, length, counter++, fov);//цвет есть в game->info
-		fov -= PI / 3 / (WIDTH);
+		fov -= PI / 3 / (WIDTH - 1);
 	}
 	set_minimap(game);//отрисовка миникарты и поля зрения должны выполняться после отрисовки стен
 }
