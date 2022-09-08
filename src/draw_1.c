@@ -15,25 +15,31 @@ void	wall_facing(double dy, double dx, t_game *game)
 
 void	draw_country(t_game *game, double length, int c, double degree)
 {
-	double	k;
+	float	k;
 	double	camera_degree;
 	int		d;
 	int		sign;
 
+	(void)	degree;
 	sign = -1;
 	camera_degree = set_camera_degree(game->info->view, &sign);
-	k = length * ft_abs(sin(from_zero_to_pi(degree + sign * ft_abs(camera_degree - game->info->view))));
-	k = (int) ceil(game->x * 32 / k);
-	d = (int) ceil(game->x * 16 - k / 2);
-	sign = game->x * 16 + k / 2;
+	
+	// k = length * ft_abs(sin(degree + sign * ft_abs(camera_degree - game->info->view)));
+	k = (float) length * fabs(cos(degree - game->info->view));
+	
+	k = fabs(1.0f / (k) * (((float)HEIGHT / (float)tan(30 * RADIAN))));
+	// k = (float) ceil((float)HEIGHT / k);
+	// printf ("k = %f\n", k);
+	d = ceil((float)HEIGHT / 2.0f - k / 2.0f) - 1;
+	sign = HEIGHT / 2.0f + k / 2.0f;
 	if (d < 0)
 		d = -1;
-	if (sign >= game->x * 32)
-		sign = game->x * 32 - 1;
+	if (sign >= HEIGHT)
+		sign = HEIGHT - 1;
 	while (++d < sign)//есть мнение, что ++d работает быстрее чем d++
 	{
 		if (game->info->color_wall)//если цвет есть есть
-			my_pixel_put(game->img, c, d, game->info->color_wall);
+			my_pixel_put(game->img, c, d , game->info->color_wall);
 		else if (!game->info->color_wall)//дефолтный зелёный
 			my_pixel_put(game->img, c, d, argb_to_int(0, 20, 200, 20));
 	}
@@ -66,13 +72,12 @@ void	some_raycasting(t_game *game, double i, double j)//сега когда см
 	char	**map;
 	double	length;
 	int		counter;
-	double	fov;
+	float	fov;
 
-	fov = game->info->view + PI / 6;
+	fov = (float)game->info->view + (float) PI / 6;
 	counter = 0;
 	map = game->square_map;
-	set_minimap(game);//отрисовка миникарты и поля зрения должны выполняться после отрисовки стен
-	while (fov >= game->info->view - PI / 6)
+	while (counter < WIDTH)
 	{
 		i = game->info->player_pos_y;//задали координаты камере или что это
 		j = game->info->player_pos_x;
@@ -85,10 +90,11 @@ void	some_raycasting(t_game *game, double i, double j)//сега когда см
 				break ;
 		}
 		my_pixel_put(game->img, (int)j + 20, (int)(i + game->x) + 20, argb_to_int(0, 20, 255, 20));//рисует поле зрения героя
-		length = sqrt(pow(i - game->info->player_pos_y, 2) + pow(j - game->info->player_pos_x, 2));
+		length = sqrt(pow((float)i - (float)game->info->player_pos_y, 2) + pow((float)j - (float)game->info->player_pos_x, 2));
 		// printf("dy = %f, dx = %f\n", i - game->info->player_pos_y, j - game->info->player_pos_x);
 		wall_facing(i - game->info->player_pos_y, j - game->info->player_pos_x, game);//выбор цвета стены (dy, dx, h/v)
-		draw_country(game, length, counter++, from_zero_to_pi(fov));//цвет есть в game->info
-		fov -= PI / 3 / ((game->y - 1) * 32);
+		draw_country(game, length, counter++, fov);//цвет есть в game->info
+		fov -= PI / 3 / (WIDTH);
 	}
+	set_minimap(game);//отрисовка миникарты и поля зрения должны выполняться после отрисовки стен
 }

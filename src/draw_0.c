@@ -90,12 +90,12 @@ void	draw_all(t_game *game)
 
 	tmp = (unsigned int *)game->img.addr;
 	color = argb_to_int(0, game->c[0], game->c[1], game->c[2]);//потолок - ceilling
-	i = game->x * 32 / 8 * game->img.size_line;
+	i = HEIGHT / 8 * game->img.size_line;
 	while (--i)
 		*tmp++ = color;
 		// my_pixel_put(game->img, j, i, color);
 	color = argb_to_int(0, game->f[0], game->f[1], game->f[2]);//пол - floor
-	i = game->x * 32 / 8 * game->img.size_line;
+	i = HEIGHT / 8 * game->img.size_line;
 	while (--i)
 		*tmp++ = color;
 	some_raycasting(game, game->info->player_pos_y, game->info->player_pos_x);//raycasting - отрисовка стен происходит в той же img, где нарисован пол и потолок

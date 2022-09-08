@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/09/04 20:23:05 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/09/07 16:16:09 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	set_map(t_game *game)
 {
 	// if (game->i == 65)//зачем это замедление?
 	// {
-	game->img.ptr = mlx_new_image(game->vars->mlx, game->y * 32, game->x * 32);
+	game->img.ptr = mlx_new_image(game->vars->mlx, WIDTH, HEIGHT);
 	game->img.addr = mlx_get_data_addr(game->img.ptr, &game->img.bits_per_pixel, \
 										&game->img.size_line, &game->img.endian);
 	mlx_clear_window(game->vars->mlx, game->vars->win);//можно вообще не вызывать - ликов не будет

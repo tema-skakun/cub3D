@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-double	from_zero_to_pi(double degree)
+float	from_zero_to_pi(float degree)
 {
 	if (degree < 0)
 		degree += 2 * PI;
@@ -54,6 +54,6 @@ void	init_info(t_game *game)
 	find_pos_hero(game->square_map, game->info); // нахождение позиции игрока
 	game->i = 0;
 	game->vars->mlx = mlx_init();
-	game->vars->win = mlx_new_window(game->vars->mlx, (game->y - 1) * 32, game->x * 64, "cub3D_minimap");
+	game->vars->win = mlx_new_window(game->vars->mlx, WIDTH, HEIGHT, "cub3D_minimap");
 	set_vision(game, game->square_map[(int) game->info->player_pos_y][(int) game->info->player_pos_x]); // установка направление взгляда
 }

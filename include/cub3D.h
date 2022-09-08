@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/04 20:20:07 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/09/08 18:23:21 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	draw_all(t_game *game);
 int		set_map(t_game *game);
 void	set_minimap(t_game *game);
 void	some_raycasting(t_game *game, double i, double j);
-double	from_zero_to_pi(double degree);
+float	from_zero_to_pi(float degree);
 int		move(int keycode, t_game *game);
 int		red_cross(int keycode, t_game *game);
 void	full_raycasting(double *i, double *j, double degree, t_game *game);
