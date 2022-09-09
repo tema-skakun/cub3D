@@ -4,8 +4,8 @@ void	my_pixel_put(t_img texture, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)// Колина проверка, она от чего то защищает
-		return ;
+	// if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)// Колина проверка, она от чего то защищает
+	// 	return ;
 	dst = texture.addr + (y * texture.size_line + x * (texture.bits_per_pixel / 8));
 	if (color != 0)// костыль для работы set_textures
 		*(unsigned int *)dst = color;
@@ -84,7 +84,6 @@ void	set_minimap(t_game *game)
 void	draw_all(t_game *game)
 {
 	int				i;
-	// int				j;
 	int				color;
 	unsigned int	*tmp;
 
@@ -93,10 +92,9 @@ void	draw_all(t_game *game)
 	i = HEIGHT / 8 * game->img.size_line + 1;
 	while (--i)
 		*tmp++ = color;
-		// my_pixel_put(game->img, j, i, color);
 	color = argb_to_int(0, game->f[0], game->f[1], game->f[2]);//пол - floor
 	i = HEIGHT / 8 * game->img.size_line + 1;
 	while (--i)
 		*tmp++ = color;
-	some_raycasting(game, game->info->player_pos_y, game->info->player_pos_x);//raycasting - отрисовка стен происходит в той же img, где нарисован пол и потолок
+	raycasting(game);//raycasting - отрисовка стен происходит в той же img, где нарисован пол и потолок
 }

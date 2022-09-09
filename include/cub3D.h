@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/08 21:49:52 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/09 19:50:11 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include <math.h>
 # include <mlx.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
-# define RADIAN 0.0174533
-# define PI		3.1415926
-# define scale_mini_map 4
+# define WIDTH 1280
+# define HEIGHT 720
+# define RADIAN 0.0174533f
+# define PI		3.1415926f
+# define scale_mini_map 3
 
 typedef struct s_vars
 {
@@ -37,9 +37,9 @@ typedef struct s_vars
 // execute need some parametres
 typedef struct s_info
 {
-	double	player_pos_x;
-	double	player_pos_y;
-	double	view;
+	float	player_pos_x;
+	float	player_pos_y;
+	float	view;
 	int		wall;//1 - горизонтальная; 2 - вертикальная
 	int		color_wall;
 	// 4 void*;
@@ -77,19 +77,15 @@ typedef struct s_game
 }				t_game;
 
 // parser;
-void		parser(int argc, char *av, t_game *game);
+void	parser(int argc, char *av, t_game *game);
 int		ft_error(char *str);
 void	cleaner(t_game *game);
 void	free_point_str(char **p_str);
 char	*get_next_line(int fd);
-// char	*ft_strcpy(char *dest, char *src);
 char	*ft_strjoin_gnl(char *s1, char const *s2);
 // void	get_map(t_game *game, char *base);
 void	validation_check_map(t_game *game);
 void	check_colors(char **digits);
-// void	add_path_texture(char **path, char *line, char *str, int *key);
-// void	add_color(int *rgb, char *line, int *key);
-// int		check_textures(t_game *game);
 void	convert_digit(int *rgb, char **digit);
 char	*return_word_and_plus_i(char *line, int *i);
 void	*ft_calloc_8(size_t count, size_t size);
@@ -103,15 +99,16 @@ int		argb_to_int(int a, int r, int g, int b);
 void	draw_all(t_game *game);
 int		set_map(t_game *game);
 void	set_minimap(t_game *game);
-void	some_raycasting(t_game *game, double i, double j);
-float	from_zero_to_2pi(float degree);
+void	raycasting(t_game *game);//, float i, float j);
+float	from_zero_to_2_pi(float degree);
 int		move(int keycode, t_game *game);
 int		red_cross(int keycode, t_game *game);
-void	full_raycasting(double *i, double *j, double degree, t_game *game);
-int		check_hit_wall(char **map, double i, double j);
-double	ft_abs(double number);
-double	set_camera_degree(double degree, int *sign);
+void	find_coordinate_grid(float *i, float *j, float degree, t_game *game);
+int		check_hit_wall(char **map, float i, float j);
+float	ft_abs(float number);
+float	set_camera_degree(float degree, int *sign);
 void	my_pixel_put(t_img texture, int x, int y, int color);
+float	pythagor(float x1, float y1, float x2, float y2);
 
 //del;
 void	print_game(t_game *game);

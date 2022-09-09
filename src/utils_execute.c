@@ -1,17 +1,17 @@
 # include "cub3D.h"
 
-double	ft_abs(double number)
+float	ft_abs(float number)
 {
-	if (number < 0)
+	if (number < 0.0f)
 		return (-number);
 	return (number);
 }
 
-double	set_camera_degree(double degree, int *sign)
+float	set_camera_degree(float degree, int *sign)
 {
-	if (degree <= PI / 2 || (degree >= PI && degree <= 3 * PI / 2))
-		*sign = 1;
-	if (degree < PI) 
-		return (PI / 2);
-	return (3 * PI / 2);
+	if (degree <= (float)PI / 2.0f || (degree >= (float)PI && degree <= 3.0f * (float)PI / 2.0f))
+		*sign = 1.0f;
+	if (degree < (float)PI) 
+		return ((float)PI / 2.0f);
+	return (3.0f * (float)PI / 2.0f);
 }
