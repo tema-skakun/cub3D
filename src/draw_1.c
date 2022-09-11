@@ -13,6 +13,26 @@ void	wall_facing(float dy, float dx, t_game *game)
 		game->info->color_wall = argb_to_int(0, 200, 200, 25);//желтый
 }
 
+float	ray(t_game *game, float degree)
+{
+	float	length;
+	float	x;
+	float	y;
+
+	x = game->info->player_pos_x;
+	y = game->info->player_pos_y;
+	while (game->square_map[(int)y][(int)x] != '1')//пока символ не стена
+	{
+		// my_pixel_put(game->img, (int)ppx + 20, (int)(ppy + game->x) + 20, argb_to_int(0, 20, 255, 20));//рисует поле зрения героя на миникарте
+		find_coordinate_grid(&y, &x, from_zero_to_2_pi(degree), game);//поиск стены
+		if (!check_hit_wall(game->square_map, y, x)) // доп проверка для попадание в стену
+			break ;
+	}
+	wall_facing(y - game->info->player_pos_y, x - game->info->player_pos_x, game);//выбор цвета стены (dy, dx, h/v)
+	length = pythagor(game->info->player_pos_x, game->info->player_pos_y, x, y);
+	return (length);
+}
+
 //ceil - возвращает наименьшее целое, которое не меньше arg. (float)ceil(2.7) = 3; (float)ceil(-2.7) = -2
 //trunk - Вычисляет ближайшее целое число, не большее по величине arg. trunk(2.7) = 2.0; trunk(-2.7) = -2.0
 
@@ -81,31 +101,30 @@ void	set_textures(t_game *game)
 
 void	raycasting(t_game *game)//, float ppy, float ppx)//сега когда смотришь за пределы карты
 {
-	float	length;// расстояние до стены
+	// float	length;// расстояние до стены
 	int		counter;// счётчик столбцов
 	float	angle_beam;// угол каждого луч
-	float	beam_coor_y;
-	float	beam_coor_x;
+	// float	beam_coor_y;
+	// float	beam_coor_x;
 
-	angle_beam = game->info->view +  (float)PI / 6.0f;//по углу мы идем справой стороны
+	angle_beam = game->info->view + (float)PI / 6.0f;//по углу мы идем справой стороны
 	counter = 0;//по экрану идём слевой стороны
 	while (counter < WIDTH)//пока экран не заполнен
 	{
-		beam_coor_y = game->info->player_pos_y;//начальная координата каждого луч
-		beam_coor_x = game->info->player_pos_x;//начальная координата каждого луч
-		while (game->square_map[(int)beam_coor_y][(int)beam_coor_x] != '1')//пока символ не стена
-		{
-			// my_pixel_put(game->img, (int)ppx + 20, (int)(ppy + game->x) + 20, argb_to_int(0, 20, 255, 20));//рисует поле зрения героя на миникарте
-			find_coordinate_grid(&beam_coor_y, &beam_coor_x, from_zero_to_2_pi(angle_beam), game);//поиск стены
-			if (!check_hit_wall(game->square_map, beam_coor_y, beam_coor_x)) // доп проверка для попадание в стену
-				break ;
-		}
+		
+		// beam_coor_y = game->info->player_pos_y;//начальная координата каждого луч
+		// beam_coor_x = game->info->player_pos_x;//начальная координата каждого луч
+		// while (game->square_map[(int)beam_coor_y][(int)beam_coor_x] != '1')//пока символ не стена
+		// {
+		// 	// my_pixel_put(game->img, (int)ppx + 20, (int)(ppy + game->x) + 20, argb_to_int(0, 20, 255, 20));//рисует поле зрения героя на миникарте
+		// 	find_coordinate_grid(&beam_coor_y, &beam_coor_x, from_zero_to_2_pi(angle_beam), game);//поиск стены
+		// 	if (!check_hit_wall(game->square_map, beam_coor_y, beam_coor_x)) // доп проверка для попадание в стену
+		// 		break ;
+		// }
 		// my_pixel_put(game->img, (int)ppx + 20, (int)(ppy + game->x) + 20, argb_to_int(0, 20, 255, 20));//рисует поле зрения героя на миникарте		
-		length = pythagor(game->info->player_pos_x, game->info->player_pos_y, beam_coor_x, beam_coor_y);
-		wall_facing(beam_coor_y - game->info->player_pos_y, beam_coor_x - game->info->player_pos_x, game);//выбор цвета стены (dy, dx, h/v)
-		draw_country(game, length, counter, angle_beam);//цвет есть в game->info
+		draw_country(game, ray(game, from_zero_to_2_pi(angle_beam)) , counter, angle_beam);//цвет есть в game->info
 		counter++;
-		angle_beam -= (PI / 3.0f) / (float)WIDTH;
+		angle_beam -= (PI / 3.0f) / ((float)WIDTH - 1);
 	}
 	set_minimap(game);//отрисовка миникарты и поля зрения должны выполняться после отрисовки стен
 }

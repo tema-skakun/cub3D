@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/09 19:50:11 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/11 18:12:25 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ float	ft_abs(float number);
 float	set_camera_degree(float degree, int *sign);
 void	my_pixel_put(t_img texture, int x, int y, int color);
 float	pythagor(float x1, float y1, float x2, float y2);
+float	ray(t_game *game, float degree);
 
 //del;
 void	print_game(t_game *game);
