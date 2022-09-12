@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:23:57 by mmeredit          #+#    #+#             */
-/*   Updated: 2022/09/07 16:16:09 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:51:46 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	execute(t_game *game)
 {
 	init_info(game); // Инициализация данных
 	// set_textures(game);
-	set_map(game); // Исполнения
+	// set_map(game);// можно вызывать только в mlx_loop_hook
 	mlx_hook(game->vars->win, 2, 0, &move, game);
 	mlx_hook(game->vars->win, 17, 0, &red_cross, game);//выход красным крестиком
 	mlx_loop_hook(game->vars->mlx, &set_map, game);

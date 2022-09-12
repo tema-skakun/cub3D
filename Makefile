@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+         #
+#    By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/09/11 19:35:24 by mmeredit         ###   ########.fr        #
+#    Updated: 2022/09/12 21:43:34 by fdarkhaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJS		= $(addprefix $(OBJS_DIR), $(OBJS_F))
 DEPS		= $(addprefix $(OBJS_DIR), $(DEPS_F))
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -MMD -O2
+CFLAGS		= -Wall -Wextra -Werror -MMD -O2#-fsanitize=address -g3
 FSA			= -fsanitize=address -g
 LFLAGS		= -Llibft -lft
 LIB			= libft.a

@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/02 18:57:20 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:15:09 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ void	check_config_file(t_game *game)
 		i++;
 	}
 	if (key != 6 || check_textures(game))
-	{
-		ft_error("Error: invalid configuration file 100");
-	}
+		ft_error("Error: invalid configuration file");
 }
 
 void	validation_check_map(t_game *game)

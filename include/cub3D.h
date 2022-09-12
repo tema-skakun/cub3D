@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/11 18:12:25 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:06:28 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_game
 	int		f[3];//цвет F
 	int		c[3];//цвет C
 	int		i;
-	// int		num_str;//считал кол-во строк в файле (сейчас малочу по дефолту 3000)
+	int		num_str;//считал кол-во строк в файле (сейчас малочу по дефолту 3000)
 	int		x;//кол-во строк
 	int		y;//максимальное кол-во столбцов
 	int		len;//временная переменная для поиска длиннейшей строки
@@ -87,7 +87,7 @@ char	*ft_strjoin_gnl(char *s1, char const *s2);
 void	validation_check_map(t_game *game);
 void	check_colors(char **digits);
 void	convert_digit(int *rgb, char **digit);
-char	*return_word_and_plus_i(char *line, int *i);
+// char	*return_word_and_plus_i(char *line, int *i);
 void	*ft_calloc_8(size_t count, size_t size);
 void	squaring_map(t_game *game);
 void	from_file_to_map(char **map, char **file, int *i, int *j);

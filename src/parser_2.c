@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/26 20:55:48 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:09:38 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	squaring_map(t_game *game)
 		ft_error("Error: memory was not allocated properly");
 	while (game->map[i])
 	{
-		game->square_map[i] = (char *)ft_calloc_8(game->y - 1, sizeof(char));
+		game->square_map[i] = (char *)ft_calloc_8(game->y, sizeof(char));
 		j = 0;
 		while (game->map[i][j])
 		{

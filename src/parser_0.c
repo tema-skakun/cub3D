@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/26 20:57:01 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:06:15 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ void	get_size_map(t_game *game)
 	}
 }
 
-/*
 void	get_size_file(char *av, t_game *game)
 {
-	char	*line;
 	int		fd;
+	char	*line;
 
-	fd = return_fd(av);
+	fd = open(av, O_RDONLY);
+	if (fd == -1)
+		ft_error("Error: wrong path or file not exist");
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -72,9 +73,11 @@ void	get_size_file(char *av, t_game *game)
 		game->num_str++;
 		free(line);
 	}
+	game->num_str++;//место под NULL
+	if (line)
+		free(line);
 	close(fd);
 }
-*/
 
 void	get_file(char *av, t_game *game)
 {
@@ -83,13 +86,10 @@ void	get_file(char *av, t_game *game)
 	int		i;
 
 	fd = open(av, O_RDONLY);
-	// printf("1 = %d\n", fd);
-	// close(fd);//почему здесь нельзя закрыть fd?
-	// printf("2 = %d\n", fd);
 	if (fd == -1)
 		ft_error("Error: wrong path or file not exist");
 	i = -1;
-	game->file = (char **)ft_calloc(3000, sizeof(char *));
+	game->file = (char **)ft_calloc(game->num_str + 1, sizeof(char *));
 	if (NULL == game->file)
 		ft_error("Error: memory was not allocated properly");
 	while (1)
@@ -97,8 +97,10 @@ void	get_file(char *av, t_game *game)
 		line = get_next_line(fd);
 		if (NULL == line)
 			break ;
-		game->file[i] = return_word_and_plus_i(line, &i);
+		game->file[++i] = ft_substr(line, 0, ft_strlen(line));
 		free(line);
+		if (NULL == game->file[i])
+			ft_error("Error: memory was not allocated properly");
 	}
 	close(fd);
 	game->file[++i] = NULL;
@@ -129,7 +131,7 @@ void	parser(int argc, char *av, t_game *game)
 		ft_error("Error: invalid number of arguments");
 	if (check_extension(av))
 		ft_error("Error: file must be in .cub extension");
-	// get_size_file(av, game);
+	get_size_file(av, game);
 	get_file(av, game);
 	get_size_map(game);
 	get_map(game);

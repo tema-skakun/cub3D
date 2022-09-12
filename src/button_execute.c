@@ -4,8 +4,8 @@ void	slide(t_game *game, float x, float y)
 {
 	float	tmp_degree;
 
-	// printf("LOL\n"); раскомментируй - заработает.
-	if (game->info->wall == 1)
+	// printf("LOL\n");// раскомментируй - заработает.
+	if (game->info->wall == 1)//горизонтальная - НЕ работает
 	{
 		tmp_degree = (float) PI;
 		if (cos(game->info->view) >= 0)
@@ -13,7 +13,7 @@ void	slide(t_game *game, float x, float y)
 		if (ray(game, tmp_degree) > 0.2f)
 			game->info->player_pos_x += x;
 	}
-	else
+	else//вертикальная - работает
 	{
 		tmp_degree = (float) 3 * PI / 2;
 		if (sin(game->info->view) >= 0)
@@ -28,7 +28,7 @@ void	move_all(t_game *game, float x, float y, float degree)
 	float	move_x;
 	float	move_y;
 
-	if (x == y)// движение вперёд-назад (поправил рассчёт)
+	if (x == y)//движение вперёд-назад (поправил рассчёт)
 	{
 		move_x = x * (float)cos(from_zero_to_2_pi(game->info->view));
 		move_y = y * (float)-sin(from_zero_to_2_pi(game->info->view));

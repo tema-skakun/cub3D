@@ -6,7 +6,7 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:42:07 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/26 20:56:53 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:18:50 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,9 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	game = (t_game){};;
-	parser(argc, argv[1], &game);//квадратная карта лежит в game->square_map
-
-	execute(&game); // execute;
-
+	game = (t_game){};
+	parser(argc, argv[1], &game);
+	execute(&game);
 	cleaner(&game);
-
 	return (0);
 }
