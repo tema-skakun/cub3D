@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/12 21:06:28 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/14 20:54:00 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,23 @@
 # define PI		3.1415926f
 # define scale_mini_map 3
 
+
 typedef struct s_vars
 {
 	void	*mlx;
 	void	*win;
 }				t_vars;
+
+typedef struct s_img
+{
+	void	*ptr;
+	char	*addr;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+	int		width;
+	int		hight;
+}	t_img;
 
 // execute need some parametres
 typedef struct s_info
@@ -42,17 +54,11 @@ typedef struct s_info
 	float	view;
 	int		wall;//1 - горизонтальная; 2 - вертикальная
 	int		color_wall;
-	// 4 void*;
+	t_img	no;
+	t_img	so;
+	t_img	ea;
+	t_img	we;
 }	t_info;
-
-typedef struct s_img
-{
-	void	*ptr;
-	char	*addr;
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
-}	t_img;
 
 typedef struct s_game
 {
@@ -107,9 +113,9 @@ void	find_coordinate_grid(float *i, float *j, float degree, t_game *game);
 int		check_hit_wall(char **map, float i, float j);
 float	ft_abs(float number);
 float	set_camera_degree(float degree, int *sign);
-void	my_pixel_put(t_img texture, int x, int y, int color);
+void	my_pixel_put(t_game *game, int x, int y, int color, float ray_x, int ray_y, float length);
 float	pythagor(float x1, float y1, float x2, float y2);
-float	ray(t_game *game, float degree);
+float	ray(t_game *game, float degree, int counter);
 
 //del;
 void	print_game(t_game *game);

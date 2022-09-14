@@ -10,7 +10,7 @@ void	slide(t_game *game, float x, float y)
 		tmp_degree = (float) PI;
 		if (cos(game->info->view) >= 0)
 			tmp_degree = 0.0f;
-		if (ray(game, tmp_degree) > 0.2f)
+		if (ray(game, tmp_degree, -1) > 0.2f)
 			game->info->player_pos_x += x;
 	}
 	else//вертикальная - работает
@@ -18,7 +18,7 @@ void	slide(t_game *game, float x, float y)
 		tmp_degree = (float) 3 * PI / 2;
 		if (sin(game->info->view) >= 0)
 			tmp_degree = (float) PI / 2;
-		if (ray(game, tmp_degree) > 0.2f)
+		if (ray(game, tmp_degree, -1) > 0.2f)
 			game->info->player_pos_y += y;
 	}
 }
@@ -39,7 +39,7 @@ void	move_all(t_game *game, float x, float y, float degree)
 		move_y = y * (float)sin(from_zero_to_2_pi(game->info->view - (float)PI / 2.0f));
 	}
 	// printf ("ray1 = %f, ray2 = %f \n", ray(game, from_zero_to_2_pi(degree)), pythagor(0, 0, move_x, move_y));
-	if (ray(game, from_zero_to_2_pi(degree)) > 0.2f)
+	if (ray(game, from_zero_to_2_pi(degree), -1) > 0.2f)
 	{
 		game->info->player_pos_x += move_x;
 		game->info->player_pos_y += move_y;

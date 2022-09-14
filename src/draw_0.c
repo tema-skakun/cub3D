@@ -1,14 +1,24 @@
 #include "cub3D.h"
 
-void	my_pixel_put(t_img texture, int x, int y, int color)
+void	my_pixel_put(t_game *game, int x, int y, int color, float ray_x, int ray_y, float length)
 {
 	char	*dst;
-
+	unsigned int	*pixels;
+	(void)	ray_x;
+	(void)	ray_y;
+	(void)	length;
+	// int		pos;
 	// if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)// Колина проверка, она от чего то защищает
 	// 	return ;
-	dst = texture.addr + (y * texture.size_line + x * (texture.bits_per_pixel / 8));
+	dst = game->img.addr + (y * game->img.size_line + x * (game->img.bits_per_pixel / 8));
+	// printf ("HERE\n");
 	if (color != 0)// костыль для работы set_textures
-		*(unsigned int *)dst = color;
+	{
+		pixels = (unsigned int *) game->info->no.addr;
+	// (int) (int) pixels[(ray_y * game->info->no.size_line / 4 + ray_x)]
+	// printf ("num = %u\n", (unsigned int)pixels[(int)(length * game->info->no.size_line / 4 + ray_x)]);
+		*(unsigned int *)dst = (unsigned int) pixels[(int)((int)length * game->info->no.size_line / 4 + ray_x)];
+	}
 }
 
 int argb_to_int(int a, int r, int g, int b)
@@ -16,7 +26,7 @@ int argb_to_int(int a, int r, int g, int b)
 	return (a << 24 | r << 16 | g << 8 | b);
 }
 
-static void	set_pixel_minimap(t_img img, int j, int i, int color, int *multiplier)
+static void	set_pixel_minimap(t_game *game, int j, int i, int color, int *multiplier)
 {
 	int	a;//строки
 	int	b;//столбцы
@@ -27,7 +37,7 @@ static void	set_pixel_minimap(t_img img, int j, int i, int color, int *multiplie
 		b = 0;
 		while (b <= scale_mini_map)
 		{
-			my_pixel_put(img, j + multiplier[1] + b, i + a + multiplier[0], color);
+			my_pixel_put(game, j + multiplier[1] + b, i + a + multiplier[0], color, 0, 0, 0);
 			b++;
 		}
 		a++;
@@ -72,7 +82,7 @@ void	set_minimap(t_game *game)
 				color = argb_to_int(0, 200, 0, 0);//цвет стен
 			else if (map[i][j] == '8')
 				color = argb_to_int(0, 0, 200, 0);//цвет пустоты
-			set_pixel_minimap(game->img, j + 20, i + 20, color, multiplier);
+			set_pixel_minimap(game, j + 20, i + 20, color, multiplier);
 			multiplier[1] += scale_mini_map;
 			j++;
 		}

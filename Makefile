@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+         #
+#    By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/09/12 21:43:34 by fdarkhaw         ###   ########.fr        #
+#    Updated: 2022/09/13 18:26:05 by mmeredit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ $(OBJS_DIR) :
 		mkdir -p $@
 
 $(NAME):  $(OBJS_DIR) $(OBJS) $(LIB_DIR)$(LIB) $(MLX_DIR)$(MLX) Makefile
-		$(CC) $(CFLAGS) -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJS) $(LFLAGS) -o $@
+		$(CC) $(CFLAGS) $(FSA) -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJS) $(LFLAGS) -o $@
 
 $(LIB_DIR)$(LIB) : ;
 		make -C $(LIB_DIR)

@@ -52,8 +52,9 @@ void	init_info(t_game *game)
 	if (game->info == NULL)
 		ft_error("Error: Memmory was not allocate properly"); 
 	find_pos_hero(game->square_map, game->info); // нахождение позиции игрока
-	game->i = 0;
 	game->vars->mlx = mlx_init();
 	game->vars->win = mlx_new_window(game->vars->mlx, WIDTH, HEIGHT, "cub3D");
+	game->info->no.ptr = mlx_xpm_file_to_image(game->vars->mlx, game->no, &game->info->no.width, &game->info->no.hight);
+	game->info->no.addr = mlx_get_data_addr(game->info->no.ptr, &game->info->no.bits_per_pixel, &game->info->no.size_line, &game->info->no.endian);
 	set_vision(game, game->square_map[(int)game->info->player_pos_y][(int)game->info->player_pos_x]);// установка направление взгляда
 }
