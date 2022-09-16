@@ -6,7 +6,7 @@
 /*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/14 20:54:00 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:47:24 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ typedef struct s_img
 	int		endian;
 	int		width;
 	int		hight;
+	float	length;
+	float	ray_x;
+	float	ray_y;
 }	t_img;
 
 // execute need some parametres
@@ -53,11 +56,7 @@ typedef struct s_info
 	float	player_pos_y;
 	float	view;
 	int		wall;//1 - горизонтальная; 2 - вертикальная
-	int		color_wall;
-	t_img	no;
-	t_img	so;
-	t_img	ea;
-	t_img	we;
+	t_img	tex[4];
 }	t_info;
 
 typedef struct s_game
@@ -113,7 +112,7 @@ void	find_coordinate_grid(float *i, float *j, float degree, t_game *game);
 int		check_hit_wall(char **map, float i, float j);
 float	ft_abs(float number);
 float	set_camera_degree(float degree, int *sign);
-void	my_pixel_put(t_game *game, int x, int y, int color, float ray_x, int ray_y, float length);
+void	my_pixel_put(t_game *game, int x, int y, t_img *img);
 float	pythagor(float x1, float y1, float x2, float y2);
 float	ray(t_game *game, float degree, int counter);
 

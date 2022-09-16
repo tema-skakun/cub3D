@@ -1,23 +1,15 @@
 #include "cub3D.h"
 
-void	my_pixel_put(t_game *game, int x, int y, int color, float ray_x, int ray_y, float length)
+void	my_pixel_put(t_game *game, int x, int y, t_img *img)
 {
 	char	*dst;
 	unsigned int	*pixels;
-	(void)	ray_x;
-	(void)	ray_y;
-	(void)	length;
-	// int		pos;
-	// if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)// Колина проверка, она от чего то защищает
-	// 	return ;
-	dst = game->img.addr + (y * game->img.size_line + x * (game->img.bits_per_pixel / 8));
-	// printf ("HERE\n");
-	if (color != 0)// костыль для работы set_textures
+
+	if (img != NULL)
 	{
-		pixels = (unsigned int *) game->info->no.addr;
-	// (int) (int) pixels[(ray_y * game->info->no.size_line / 4 + ray_x)]
-	// printf ("num = %u\n", (unsigned int)pixels[(int)(length * game->info->no.size_line / 4 + ray_x)]);
-		*(unsigned int *)dst = (unsigned int) pixels[(int)((int)length * game->info->no.size_line / 4 + ray_x)];
+		dst = game->img.addr + (y * game->img.size_line + x * (game->img.bits_per_pixel / 8));
+		pixels = (unsigned int *) mlx_get_data_addr(img->ptr, &img->bits_per_pixel, &img->size_line, &img->endian);
+		*(unsigned int *)dst = (unsigned int) pixels[(int)((int)img->length * img->size_line / 4 + (int)img->ray_x)];
 	}
 }
 
@@ -30,6 +22,7 @@ static void	set_pixel_minimap(t_game *game, int j, int i, int color, int *multip
 {
 	int	a;//строки
 	int	b;//столбцы
+	(void) color;
 
 	a = 0;
 	while (a <= scale_mini_map)
@@ -37,7 +30,7 @@ static void	set_pixel_minimap(t_game *game, int j, int i, int color, int *multip
 		b = 0;
 		while (b <= scale_mini_map)
 		{
-			my_pixel_put(game, j + multiplier[1] + b, i + a + multiplier[0], color, 0, 0, 0);
+			my_pixel_put(game, j + multiplier[1] + b, i + a + multiplier[0], NULL);
 			b++;
 		}
 		a++;

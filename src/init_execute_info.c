@@ -43,6 +43,18 @@ static void	set_vision(t_game *game, char start)
 		game->info->view = 3.0f * (float)PI / 2.0f;
 }
 
+void	init_textures(t_game *game)
+{
+	game->info->tex[0].ptr = mlx_xpm_file_to_image(game->vars->mlx, game->no, \
+		&game->info->tex[0].width, &game->info->tex[0].hight);
+	game->info->tex[1].ptr = mlx_xpm_file_to_image(game->vars->mlx, game->so, \
+		&game->info->tex[1].width, &game->info->tex[1].hight);
+	game->info->tex[2].ptr = mlx_xpm_file_to_image(game->vars->mlx, game->ea, \
+		&game->info->tex[2].width, &game->info->tex[2].hight);
+	game->info->tex[3].ptr = mlx_xpm_file_to_image(game->vars->mlx, game->we, \
+		&game->info->tex[3].width, &game->info->tex[3].hight);
+}
+
 void	init_info(t_game *game)
 {
 	game->vars = malloc(sizeof(t_vars)); // mlx данные
@@ -54,7 +66,6 @@ void	init_info(t_game *game)
 	find_pos_hero(game->square_map, game->info); // нахождение позиции игрока
 	game->vars->mlx = mlx_init();
 	game->vars->win = mlx_new_window(game->vars->mlx, WIDTH, HEIGHT, "cub3D");
-	game->info->no.ptr = mlx_xpm_file_to_image(game->vars->mlx, game->no, &game->info->no.width, &game->info->no.hight);
-	game->info->no.addr = mlx_get_data_addr(game->info->no.ptr, &game->info->no.bits_per_pixel, &game->info->no.size_line, &game->info->no.endian);
+	init_textures(game);
 	set_vision(game, game->square_map[(int)game->info->player_pos_y][(int)game->info->player_pos_x]);// установка направление взгляда
 }

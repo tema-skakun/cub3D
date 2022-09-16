@@ -4,7 +4,8 @@ void	slide(t_game *game, float x, float y)
 {
 	float	tmp_degree;
 
-	// printf("LOL\n");// раскомментируй - заработает.
+	// printf ("x = %f  y = %f\n", x, y);
+	// write (1, &x, 1);// раскомментируй - заработает.
 	if (game->info->wall == 1)//горизонтальная - НЕ работает
 	{
 		tmp_degree = (float) PI;
@@ -38,7 +39,6 @@ void	move_all(t_game *game, float x, float y, float degree)
 		move_x = x * (float)-cos(from_zero_to_2_pi(game->info->view + (float)PI / 2.0f));
 		move_y = y * (float)sin(from_zero_to_2_pi(game->info->view - (float)PI / 2.0f));
 	}
-	// printf ("ray1 = %f, ray2 = %f \n", ray(game, from_zero_to_2_pi(degree)), pythagor(0, 0, move_x, move_y));
 	if (ray(game, from_zero_to_2_pi(degree), -1) > 0.2f)
 	{
 		game->info->player_pos_x += move_x;
@@ -54,8 +54,6 @@ void	move_all(t_game *game, float x, float y, float degree)
 void	look(t_game *game, float x)
 {
 	game->info->view = from_zero_to_2_pi(game->info->view + x * (float)RADIAN);
-	// set_map(game);
-	// return(1);
 }
 
 int	red_cross(int keycode, t_game *game)
