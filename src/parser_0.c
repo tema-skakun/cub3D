@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/12 21:06:15 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/17 20:07:33 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,4 @@ void	parser(int argc, char *av, t_game *game)
 	get_size_map(game);
 	get_map(game);
 	validation_check_map(game);
-	// print_game(game);
 }

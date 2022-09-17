@@ -1,27 +1,5 @@
 # include "cub3D.h"
 
-/*
-int	check_hit_wall(char **map, float ppy, float ppx)//округляет координаты стены
-{
-	if (ppy == (int)ppy)
-	{
-		ppy = ppy - 1;
-		ppx = (float)trunc(ppx);
-	}
-	else if (ppx == (int)ppx)
-	{
-		ppx = ppx - 1;
-		ppy = (float)trunc(ppy);
-	}
-	if (map[(int)ppy][(int)ppx] && map[(int)ppy][(int)ppx] == '1')
-		return (0);
-	return (1);
-}
-*/
-
-//ceil - возвращает наименьшее целое, которое не меньше arg. ceil(2.7) = 3; ceil(-2.7) = -2
-//trunk - Вычисляет ближайшее целое число, не большее по величине arg. trunk(2.7) = 2.0; trunk(-2.7) = -2.0
-
 static void	check_horizontal_line(float *xy, float ppy, float ppx, float angle)
 {
 	if (angle > 0 && angle < (float)PI)//Если луч направлен вверх
@@ -34,13 +12,6 @@ static void	check_horizontal_line(float *xy, float ppy, float ppx, float angle)
 		xy[1] = (float)trunc(ppy + 1.0f);//координата гор сетки
 		xy[0] = ppx - (xy[1] - ppy) / (float)tan(angle);//координата верт сетки
 	}
-	// else// без этого кода тоже работает
-	// {
-	// 	xy[1] = ppy;
-	// 	xy[0] = (float)ceil(ppx +(float)cos(angle));
-	// 	if (cos(angle) > 0)
-	// 		xy[0] = (float)trunc(ppx +(float)cos(angle));
-	// }
 }
 
 static void	check_vertical_line(float *xy, float ppy, float ppx, float angle)
@@ -55,13 +26,6 @@ static void	check_vertical_line(float *xy, float ppy, float ppx, float angle)
 		xy[2] = (float)ceil(ppx - 1.0f);
 		xy[3] = ppy + (ppx - xy[2]) * (float)tan(angle);
 	}
-	// else
-	// {
-	// 	xy[2] = ppx;
-	// 	xy[3] = (float)trunc(ppy -(float)sin(angle));
-	// 	if (sin(angle) > 0)
-	// 		xy[3] = (float)ceil(ppy -(float)sin(angle));
-	// }
 }
 
 float	pythagor(float x1, float y1, float x2, float y2)
@@ -87,14 +51,12 @@ void	find_coordinate_grid(float *beam_coor_y, float *beam_coor_x, float angle, t
 		*beam_coor_x = xy[0];
 		*beam_coor_y = xy[1];
 		game->info->wall = 1;//горизонтальная линия
-		// printf("hypotenuse[1] = %f\n", hypotenuse[1]);
 	}
 	else if (hypotenuse[0] >= hypotenuse[1])
 	{
 		*beam_coor_x = xy[2];
 		*beam_coor_y = xy[3];
 		game->info->wall = 2;//вертикальная линия
-		// printf("hypotenuse[0] = %f\n", hypotenuse[0]);
 	}
 }
 

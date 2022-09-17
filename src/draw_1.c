@@ -21,8 +21,8 @@ void	draw_country(t_game *game, int col, t_img *img)
 
 	h = img->length;
 	k = 0;
-	if (h > HEIGHT)
-		k = (h - HEIGHT) * (64 / h);
+	// if (h > HEIGHT)
+	// 	k = (h - HEIGHT) * (64 / h);
 	
 	top = (int)ceil((float)(HEIGHT / 2.0f) - (h / 2.0f));
 	down = (int)((float)(HEIGHT / 2.0f) + (h / 2.0f));
@@ -30,6 +30,7 @@ void	draw_country(t_game *game, int col, t_img *img)
 	{
 		top = 0;
 		down = HEIGHT;
+		k = (h - HEIGHT) / 2;
 		// h = h - (h - HEIGHT);
 	}
 	img->ray_x = 64 * (img->ray_x - (int) img->ray_x);
@@ -59,7 +60,7 @@ float	ray(t_game *game, float degree, int counter)
 			break ;
 	}
 	length = pythagor(game->info->player_pos_x, game->info->player_pos_y, x, y);
-	if (counter != -1)
+	if (counter != -1) // вынести в функцию
 	{
 		img = wall_facing(y - game->info->player_pos_y, x - game->info->player_pos_x, game);//выбор цвета стены (dy, dx, h/v)
 		img.length = length * (float)cos(degree - game->info->view);

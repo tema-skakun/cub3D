@@ -8,7 +8,9 @@ void	my_pixel_put(t_game *game, int x, int y, t_img *img)
 	if (img != NULL)
 	{
 		dst = game->img.addr + (y * game->img.size_line + x * (game->img.bits_per_pixel / 8));
+
 		pixels = (unsigned int *) mlx_get_data_addr(img->ptr, &img->bits_per_pixel, &img->size_line, &img->endian);
+
 		*(unsigned int *)dst = (unsigned int) pixels[(int)((int)img->length * img->size_line / 4 + (int)img->ray_x)];
 	}
 }
@@ -36,22 +38,6 @@ static void	set_pixel_minimap(t_game *game, int j, int i, int color, int *multip
 		a++;
 	}
 }
-
-// static void	set_pixel_minimap(int color, t_game *game, int i, int j)
-// {
-// 	t_img			img;
-// 	unsigned int	*tmp;
-// 	int				k;
-
-// 	k = 0;
-// 	img.ptr = mlx_new_image(game->vars->mlx, 32, 32);
-// 	img.addr = mlx_get_data_addr(img.ptr, &img.bits_per_pixel, &img.size_line, &img.endian);
-// 	tmp = (unsigned int *)img.addr;
-// 	while (k++ < 32 / 4 * img.size_line)
-// 		*tmp++ = color;	
-// 	mlx_put_image_to_window(game->vars->mlx, game->vars->win, img.ptr, j, i);
-// 	mlx_destroy_image(game->vars->mlx, img.ptr);
-// }
 
 void	set_minimap(t_game *game)
 {

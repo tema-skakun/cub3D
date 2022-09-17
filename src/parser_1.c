@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/12 21:15:09 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/17 19:43:03 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int	check_textures(t_game *game)//проверка на существовани
 	ret[0] = read(file[0], NULL, 0);//это не папка?
 	close(file[0]);//здесь можно закрывать fd?
 	if (file[0] == -1 || ret[0] == -1)
+	{
+		printf ("here %s\n", game->no);
 		return (1);
+	}
 	file[1] = open(game->so, O_RDONLY);
 	ret[1] = read(file[1], NULL, 0);
 	close(file[1]);//здесь можно закрывать fd?
@@ -88,7 +91,7 @@ void	check_config_file(t_game *game)
 		i++;
 	}
 	if (key != 6 || check_textures(game))
-		ft_error("Error: invalid configuration file");
+		ft_error("Error: invalid configuration file1");
 }
 
 void	validation_check_map(t_game *game)

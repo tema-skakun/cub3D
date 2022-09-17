@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/12 20:27:24 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/17 20:08:18 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,6 @@ char	*return_word_and_plus_i(char *line, int *i)
 	return (str);
 }
 
-// void	ft_bzero_8(void *s, size_t n)
-// {
-// 	char	*ptr;
-
-// 	ptr = (char *)s;
-// 	while (n--)
-// 		*ptr++ = '8';
-// 	*ptr = '\0';
-// }
-
 void	ft_bzero_8(void *s, size_t n)
 {
 	char	*ptr;
@@ -42,7 +32,6 @@ void	ft_bzero_8(void *s, size_t n)
 	ptr = (char *)s;
 	while (n--)
 		ptr[i++] = '8';
-	// printf("ptr[%d] = %p\n", i, &ptr[i]);
 	ptr[--i] = '\0';
 }
 

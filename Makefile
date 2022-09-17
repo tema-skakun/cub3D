@@ -6,7 +6,7 @@
 #    By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/25 20:27:18 by fdarkhaw          #+#    #+#              #
-#    Updated: 2022/09/17 17:06:04 by mmeredit         ###   ########.fr        #
+#    Updated: 2022/09/17 19:08:28 by mmeredit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ $(OBJS_DIR) :
 		mkdir -p $@
 
 $(NAME):  $(OBJS_DIR) $(OBJS) $(LIB_DIR)$(LIB) $(MLX_DIR)$(MLX) Makefile
-		$(CC) $(CFLAGS) -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJS) $(LFLAGS) -o $@
+		$(CC) $(CFLAGS) $(FSA) -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJS) $(LFLAGS) -o $@
 
 $(LIB_DIR)$(LIB) : ;
 		make -C $(LIB_DIR)

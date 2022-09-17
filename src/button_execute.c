@@ -1,29 +1,5 @@
 #include "cub3D.h"
 
-void	slide(t_game *game, float x, float y)
-{
-	float	tmp_degree;
-
-	// printf ("x = %f  y = %f\n", x, y);
-	// write (1, &x, 1);// раскомментируй - заработает.
-	if (game->info->wall == 1)//горизонтальная - НЕ работает
-	{
-		tmp_degree = (float) PI;
-		if (cos(game->info->view) >= 0)
-			tmp_degree = 0.0f;
-		if (ray(game, tmp_degree, -1) > 0.2f)
-			game->info->player_pos_x += x;
-	}
-	else//вертикальная - работает
-	{
-		tmp_degree = (float) 3 * PI / 2;
-		if (sin(game->info->view) >= 0)
-			tmp_degree = (float) PI / 2;
-		if (ray(game, tmp_degree, -1) > 0.2f)
-			game->info->player_pos_y += y;
-	}
-}
-
 void	move_all(t_game *game, float x, float y, float degree)
 {
 	float	move_x;
@@ -43,11 +19,6 @@ void	move_all(t_game *game, float x, float y, float degree)
 	{
 		game->info->player_pos_x += move_x;
 		game->info->player_pos_y += move_y;
-	}
-	else
-	{
-		if (x == y && x > 0)
-			slide(game, move_x, move_y);
 	}
 }
 
