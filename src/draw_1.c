@@ -54,7 +54,7 @@ float	ray(t_game *game, float degree, int counter)
 	y = game->info->player_pos_y;
 	while (game->square_map[(int)y][(int)x] != '1')//пока символ не стена
 	{
-		find_coordinate_grid(&y, &x, from_zero_to_2_pi(degree), game);//поиск стены
+		find_coordinate_grid(&y, &x, degree, game);//поиск стены
 		if (!check_hit_wall(game->square_map, y, x)) // доп проверка для попадание в стену
 			break ;
 	}
@@ -63,7 +63,7 @@ float	ray(t_game *game, float degree, int counter)
 	{
 		img = wall_facing(y - game->info->player_pos_y, x - game->info->player_pos_x, game);//выбор цвета стены (dy, dx, h/v)
 		img.length = length * (float)cos(degree - game->info->view);
-		img.length = (1.0f / img.length) * ((float)WIDTH / 2.0f) / (float)tan(30.0f * (float)RADIAN);
+		img.length = (1.0f / img.length) * (((float)WIDTH - 1.0f) / 2.0f) / (float)tan(30.0f * (float)RADIAN);
 		img.ray_x = x;
 		img.ray_y = y;
 		draw_country(game, counter, &img);
@@ -74,15 +74,26 @@ float	ray(t_game *game, float degree, int counter)
 void	raycasting(t_game *game)//, float ppy, float ppx)//сега когда смотришь за пределы карты
 {
 	int		counter;// счётчик столбцов
+	float	step;
 	float	angle_beam;// угол каждого луч
+	float	tmp_angle;
+	float	tmp_angle2;
+	float	tmp_current;
 
-	angle_beam = game->info->view + (float)PI / 6.0f;//по углу мы идем справой стороны
+	step = (2 * tan((float)FOV / 2.0f * RADIAN)) / (WIDTH - 1);
+	
+	tmp_angle = tan((float)FOV / 2.0f * RADIAN);
+	tmp_angle2 = -tmp_angle;
+	tmp_current = tmp_angle;
+	angle_beam = game->info->view;
 	counter = 0;//по экрану идём слевой стороны
-	while (counter < WIDTH)//пока экран не заполнен
-	{
-		ray(game, from_zero_to_2_pi(angle_beam), counter);//цвет есть в game->info
+	// printf ("tmp_current = %f tmp_angle = %f\n", tmp_current, tmp_angle2);
+	while (tmp_current >= tmp_angle2)//пока экран не заполнен
+	{	
+		angle_beam = atan(tmp_current);
+		ray(game, from_zero_to_2_pi(angle_beam + game->info->view), counter);//цвет есть в game->info
 		counter++;
-		angle_beam -= (PI / 3.0f) / ((float)WIDTH - 1);
+		tmp_current -= step;
 	}
 	set_minimap(game);//отрисовка миникарты и поля зрения должны выполняться после отрисовки стен
 }

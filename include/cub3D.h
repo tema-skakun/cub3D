@@ -6,7 +6,7 @@
 /*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:58 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/16 16:47:24 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/17 15:56:18 by mmeredit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define RADIAN 0.0174533f
 # define PI		3.1415926f
 # define scale_mini_map 3
-
+# define FOV	60
 
 typedef struct s_vars
 {
