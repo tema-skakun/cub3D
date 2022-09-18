@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:00:37 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/17 20:08:18 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/18 10:59:10 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-char	*return_word_and_plus_i(char *line, int *i)
-{
-	char	*str;
-
-	str = ft_substr(line, 0, ft_strlen(line));
-	if (NULL == str)
-		ft_error("Error: memory was not allocated properly");
-	*i += 1;
-	return (str);
-}
 
 void	ft_bzero_8(void *s, size_t n)
 {
@@ -53,4 +42,26 @@ void	from_file_to_map(char **map, char **file, int *i, int *j)
 		ft_error("Error: memory was not allocated properly");
 	*j += 1;
 	*i += 1;
+}
+
+void	get_map(t_game *game)
+{
+	int	i;//счётчик по map
+	int	j;//счётчик по file
+
+	i = 0;
+	j = 0;
+	game->map = (char **)ft_calloc(game->x + 1, sizeof(char *));
+	if (NULL == game->map)
+		ft_error("Error: memory was not allocated properly");
+	while (game->file[j])
+	{
+		if (!ft_strchr("NSWEFC\n", game->file[j][0]))
+		{
+			while (game->file[j])
+				from_file_to_map(&game->map[i], &game->file[j], &i, &j);
+		}
+		j++;
+	}
+	game->map[++i] = NULL;
 }

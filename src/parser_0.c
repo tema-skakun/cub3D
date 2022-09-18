@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:15:49 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/17 20:07:33 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/18 10:59:01 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	get_map(t_game *game)
-{
-	int	i;//счётчик по map
-	int	j;//счётчик по file
-
-	i = 0;
-	j = 0;
-	game->map = (char **)ft_calloc(game->x + 1, sizeof(char *));
-	if (NULL == game->map)
-		ft_error("Error: memory was not allocated properly");
-	while (game->file[j])
-	{
-		if (!ft_strchr("NSWEFC\n", game->file[j][0]))
-		{
-			while (game->file[j])
-				from_file_to_map(&game->map[i], &game->file[j], &i, &j);
-		}
-		j++;
-	}
-	game->map[++i] = NULL;
-}
 
 void	get_size_map(t_game *game)
 {
@@ -73,7 +51,7 @@ void	get_size_file(char *av, t_game *game)
 		game->num_str++;
 		free(line);
 	}
-	game->num_str++;//место под NULL
+	game->num_str++;
 	if (line)
 		free(line);
 	close(fd);

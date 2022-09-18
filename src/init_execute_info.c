@@ -1,13 +1,16 @@
-#include "cub3D.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_execute_info.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/18 11:22:10 by fdarkhaw          #+#    #+#             */
+/*   Updated: 2022/09/18 13:24:36 by fdarkhaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-float	from_zero_to_2_pi(float degree)
-{
-	if (degree < 0.0f)
-		degree += 2.0f * (float)PI;
-	else if (degree >= 2.0f * (float)PI)
-		degree = degree - 2.0f * (float)PI;
-	return (degree);
-}
+#include "cub3D.h"
 
 static void	find_pos_hero(char **map, t_info *info)
 {
@@ -20,7 +23,7 @@ static void	find_pos_hero(char **map, t_info *info)
 		j = 0;
 		while (map[i][j])
 		{
-			if (ft_strchr("NSWE", map[i][j]))// == 'N' || map[i][j] == 'S' || map[i][j] == 'E' || map[i][j] == 'W')
+			if (ft_strchr("NSWE", map[i][j]))
 			{
 				info->player_pos_x = j + 0.5f;//если не делать +0,5 при инициализации игрока в углу карты при повороте на 360 - сега
 				info->player_pos_y = i + 0.5f;
@@ -57,15 +60,16 @@ void	init_textures(t_game *game)
 
 void	init_info(t_game *game)
 {
-	game->vars = malloc(sizeof(t_vars)); // mlx данные
+	game->vars = malloc(sizeof(t_vars));//mlx данные
 	if (game->vars == NULL)
-	    ft_error("Error: Memmory was not allocate properly"); 
-	game->info = malloc(sizeof(t_info)); // данные игрока
+		ft_error("Error: memory was not allocated properly");
+	game->info = malloc(sizeof(t_info));//данные игрока
 	if (game->info == NULL)
-		ft_error("Error: Memmory was not allocate properly"); 
-	find_pos_hero(game->square_map, game->info); // нахождение позиции игрока
+		ft_error("Error: memory was not allocated properly");
+	find_pos_hero(game->square_map, game->info);// нахождение позиции игрока
 	game->vars->mlx = mlx_init();
 	game->vars->win = mlx_new_window(game->vars->mlx, WIDTH, HEIGHT, "cub3D");
 	init_textures(game);
-	set_vision(game, game->square_map[(int)game->info->player_pos_y][(int)game->info->player_pos_x]);// установка направление взгляда
+	set_vision(game, game->square_map \
+				[(int)game->info->player_pos_y][(int)game->info->player_pos_x]);
 }

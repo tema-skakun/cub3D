@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeredit <mmeredit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:45:36 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/09/17 19:43:03 by mmeredit         ###   ########.fr       */
+/*   Updated: 2022/09/18 10:34:53 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,22 @@ int	check_textures(t_game *game)//проверка на существовани
 
 	file[0] = open(game->no, O_RDONLY);//файл есть?
 	ret[0] = read(file[0], NULL, 0);//это не папка?
-	close(file[0]);//здесь можно закрывать fd?
+	close(file[0]);//закрываю fd(?)
 	if (file[0] == -1 || ret[0] == -1)
-	{
-		printf ("here %s\n", game->no);
 		return (1);
-	}
 	file[1] = open(game->so, O_RDONLY);
 	ret[1] = read(file[1], NULL, 0);
-	close(file[1]);//здесь можно закрывать fd?
+	close(file[1]);//закрываю fd(?)
 	if (file[1] == -1 || ret[1] == -1)
 		return (1);
 	file[2] = open(game->ea, O_RDONLY);
 	ret[2] = read(file[2], NULL, 0);
-	close(file[2]);//здесь можно закрывать fd?
+	close(file[2]);//закрываю fd(?)
 	if (file[2] == -1 || ret[2] == -1)
 		return (1);
 	file[3] = open(game->we, O_RDONLY);
 	ret[3] = read(file[3], NULL, 0);
-	close(file[3]);//здесь можно закрывать fd?
+	close(file[3]);//закрываю fd(?)
 	if (file[3] == -1 || ret[3] == -1)
 		return (1);
 	return (0);
@@ -105,14 +102,14 @@ void	validation_check_map(t_game *game)
 	i = 0;
 	while (game->map[i])
 	{
-		if (ft_strchr("\n", game->map[i][0]))//карта не может быть разорвана, может состоять только из " 01NSWE"
+		if (ft_strchr("\n", game->map[i][0]))//карта не может быть разорвана пустой строкой
 			ft_error("Error: the map contains an invalid character(s)");
 		j = 0;
 		while (game->map[i][j])
 		{
 			if (ft_strchr("NSWE", game->map[i][j]))
 				hero++;
-			if (!ft_strchr("NSWE10 \n", game->map[i][j]))
+			if (!ft_strchr("NSWE10 \n", game->map[i][j]))//карта может состоять только из " 01NSWE"
 				ft_error("Error: the map contains an invalid character(s)");
 			j++;
 		}

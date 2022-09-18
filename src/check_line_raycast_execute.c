@@ -1,16 +1,28 @@
-# include "cub3D.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_line_raycast_execute.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/18 13:29:50 by fdarkhaw          #+#    #+#             */
+/*   Updated: 2022/09/18 14:36:57 by fdarkhaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3D.h"
 
 static void	check_horizontal_line(float *xy, float ppy, float ppx, float angle)
 {
 	if (angle > 0 && angle < (float)PI)//Если луч направлен вверх
 	{
-		xy[1] = (float)ceil(ppy - 1.0f);//координата гор сетки
-		xy[0] = ppx + (ppy - xy[1]) / (float)tan(angle);//координата верт сетки
+		xy[1] = (float)ceil(ppy - 1.0f);//координата гор сетки - Y
+		xy[0] = ppx + (ppy - xy[1]) / (float)tan(angle);//координата верт сетки - X
 	}
-	else if (angle > (float)PI && angle < 2.0f * (float)PI)//Если луч направлен вниз
+	else if (angle > (float)PI && angle < 2.0f * (float)PI)//луч направлен вниз
 	{
-		xy[1] = (float)trunc(ppy + 1.0f);//координата гор сетки
-		xy[0] = ppx - (xy[1] - ppy) / (float)tan(angle);//координата верт сетки
+		xy[1] = (float)trunc(ppy + 1.0f);//координата гор сетки - Y
+		xy[0] = ppx - (xy[1] - ppy) / (float)tan(angle);//координата верт сетки - X
 	}
 }
 
@@ -18,13 +30,13 @@ static void	check_vertical_line(float *xy, float ppy, float ppx, float angle)
 {
 	if (angle < (float)PI / 2.0f || angle > 3.0f * (float)PI / 2.0f)//если луч брошен вправо
 	{
-		xy[2] = (float)trunc(ppx + 1.0f);
-		xy[3] = ppy - (xy[2] - ppx) * (float)tan(angle);
+		xy[2] = (float)trunc(ppx + 1.0f);// X
+		xy[3] = ppy - (xy[2] - ppx) * (float)tan(angle);// Y
 	}
 	else if (angle > (float)PI / 2.0f || angle < 3 * (float)PI / 2.0f)//если луч брошен влево
 	{
-		xy[2] = (float)ceil(ppx - 1.0f);
-		xy[3] = ppy + (ppx - xy[2]) * (float)tan(angle);
+		xy[2] = (float)ceil(ppx - 1.0f);// X
+		xy[3] = ppy + (ppx - xy[2]) * (float)tan(angle);// Y
 	}
 }
 
@@ -32,11 +44,13 @@ float	pythagor(float x1, float y1, float x2, float y2)
 {
 	float	hypotenuse;
 
-	hypotenuse = (float)sqrt((float)pow(x1 - x2, 2.0f) + (float)pow(y1 - y2, 2.0f));
+	hypotenuse = (float)sqrt((float)pow(x1 - x2, 2.0f) \
+								+ (float)pow(y1 - y2, 2.0f));
 	return (hypotenuse);
 }
 
-void	find_coordinate_grid(float *beam_coor_y, float *beam_coor_x, float angle, t_game *game)
+void	find_coordinate_grid(float *beam_coor_y, float *beam_coor_x, \
+													float angle, t_game *game)
 {
 	float	xy[4];
 	float	hypotenuse[2];
@@ -60,7 +74,7 @@ void	find_coordinate_grid(float *beam_coor_y, float *beam_coor_x, float angle, t
 	}
 }
 
-int	check_hit_wall(char **map, float beam_coor_y, float beam_coor_x)//проверка попадания в стену
+int	check_hit_wall(char **map, float beam_coor_y, float beam_coor_x)
 {
 	if (beam_coor_y == (int)beam_coor_y)
 	{

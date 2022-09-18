@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleaner.c                                          :+:      :+:    :+:   */
+/*   cleaner_and_error.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ulagrezina <ulagrezina@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 21:03:08 by fdarkhaw          #+#    #+#             */
-/*   Updated: 2022/08/21 01:15:03 by ulagrezina       ###   ########.fr       */
+/*   Updated: 2022/09/18 14:41:29 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+int	ft_error(char *str)
+{
+	printf("%s\n", str);
+	exit(1);
+}
 
 void	free_point_str(char **p_str)
 {
@@ -32,6 +38,10 @@ void	cleaner(t_game *game)
 		free(game->we);
 	if (game->ea)
 		free(game->ea);
+	if (game->info)
+		free(game->info);
+	if (game->vars)
+		free(game->vars);
 	if (game->map)
 		free_point_str(game->map);
 	if (game->file)

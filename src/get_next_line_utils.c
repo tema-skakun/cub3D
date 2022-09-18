@@ -6,13 +6,11 @@
 /*   By: fdarkhaw <fdarkhaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 15:28:25 by jg                #+#    #+#             */
-/*   Updated: 2022/08/01 21:28:39 by fdarkhaw         ###   ########.fr       */
+/*   Updated: 2022/09/18 13:26:09 by fdarkhaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-
 
 char	*ft_strjoin_gnl(char *s1, char const *s2)
 {
