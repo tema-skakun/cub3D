@@ -106,7 +106,7 @@ int	check_extension(char *str)
 void	parser(int argc, char *av, t_game *game)
 {
 	if (argc != 2)
-		ft_error("Error: invalid number of arguments");
+		ft_error("Error: invalid number of arguments\nArgument is a map in format *.cub");
 	if (check_extension(av))
 		ft_error("Error: file must be in .cub extension");
 	get_size_file(av, game);
